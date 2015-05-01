@@ -8,33 +8,25 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Drimal
  */
-public class FeedContainer {
+public class RssFeedContainer implements Container {
 
-    private static FeedContainer instance = null;
     private ConcurrentMap<String, RssFeed> feedContainer = new ConcurrentHashMap<>();
 
     private void FeedContainer() {
+        feedContainer = new ConcurrentHashMap<>();
     }
 
-    public static FeedContainer getInstance() {
-        if (instance == null) {
-            synchronized (FeedContainer.class) {
-                if (instance == null) {
-                    instance = new FeedContainer();
-                }
-            }
-        }
-        return instance;
-    }
-
+    @Override
     public void putIntoFeedContainer(String key, RssFeed feed) {
         feedContainer.put(key, feed);
     }
 
+    @Override
     public Set<String> getKeys() {
         return feedContainer.keySet();
     }
 
+    @Override
     public RssFeed getFromFeedContainer(String key) {
         return feedContainer.getOrDefault(key, new RssFeed());
     }

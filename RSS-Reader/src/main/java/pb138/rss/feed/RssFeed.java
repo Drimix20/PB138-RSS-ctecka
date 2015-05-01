@@ -15,8 +15,8 @@ public class RssFeed {
     private final String copyright;
     private final String pubDate;
 
-    private FeedImage image = new FeedImage();
-    private final List<FeedItem> items = new ArrayList<FeedItem>();
+    private RssFeedImage image = new RssFeedImage();
+    private final List<RssFeedItem> items = new ArrayList<RssFeedItem>();
 
     public RssFeed() {
         this.title = "";
@@ -37,7 +37,7 @@ public class RssFeed {
         this.pubDate = pubDate;
     }
 
-    public List<FeedItem> getItems() {
+    public List<RssFeedItem> getItems() {
         return items;
     }
 
@@ -65,11 +65,11 @@ public class RssFeed {
         return pubDate;
     }
 
-    public FeedImage getImage() {
+    public RssFeedImage getImage() {
         return image;
     }
 
-    public void setImage(FeedImage image) {
+    public void setImage(RssFeedImage image) {
         this.image = image;
     }
 

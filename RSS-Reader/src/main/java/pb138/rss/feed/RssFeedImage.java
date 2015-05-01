@@ -6,19 +6,19 @@ import java.util.Objects;
  *
  * @author Drimal
  */
-public class FeedImage {
+public class RssFeedImage {
 
     private String title;
     private String url;
     private String link;
 
-    public FeedImage() {
+    public RssFeedImage() {
         title = "";
         url = "";
         link = "";
     }
 
-    public FeedImage(String title, String url, String link) {
+    public RssFeedImage(String title, String url, String link) {
         this.title = title;
         this.url = url;
         this.link = link;
@@ -53,7 +53,7 @@ public class FeedImage {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final FeedImage other = (FeedImage) obj;
+        final RssFeedImage other = (RssFeedImage) obj;
         if (!Objects.equals(this.title, other.title)) {
             return false;
         }

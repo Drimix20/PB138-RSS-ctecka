@@ -3,7 +3,7 @@ package pb138.rss.feed;
 /*
  * Represents one RSS message
  */
-public class FeedItem {
+public class RssFeedItem {
 
     private String title;
     private String description;

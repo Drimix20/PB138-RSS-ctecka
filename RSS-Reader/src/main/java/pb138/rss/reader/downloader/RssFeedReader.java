@@ -1,8 +1,8 @@
 package pb138.rss.reader.downloader;
 
-import pb138.rss.feed.FeedImage;
+import pb138.rss.feed.RssFeedImage;
 import pb138.rss.feed.RssFeed;
-import pb138.rss.feed.FeedItem;
+import pb138.rss.feed.RssFeedItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -17,9 +17,9 @@ import org.apache.log4j.Logger;
  *
  * @author Drimal
  */
-public class FeedReader {
+public class RssFeedReader {
 
-    private static Logger logger = Logger.getLogger(FeedReader.class);
+    private static Logger logger = Logger.getLogger(RssFeedReader.class);
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
     private static final String CHANNEL = "channel";
@@ -33,7 +33,7 @@ public class FeedReader {
     private static final String IMAGE = "image";
     private URL url;
 
-    public FeedReader(String address) {
+    public RssFeedReader(String address) {
         super();
         try {
             this.url = new URL(address);
@@ -70,7 +70,7 @@ public class FeedReader {
             String imgTitle = "";
             String imgUrl = "";
             String imgLink = "";
-            FeedImage image = new FeedImage();
+            RssFeedImage image = new RssFeedImage();
 
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             InputStream in = read();
@@ -133,7 +133,7 @@ public class FeedReader {
                     }
                 } else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
-                        FeedItem message = new FeedItem();
+                        RssFeedItem message = new RssFeedItem();
                         message.setAuthor(author);
                         message.setDescription(description);
                         message.setGuid(guid);
@@ -145,7 +145,7 @@ public class FeedReader {
                         continue;
                     } else if (event.asEndElement().getName().getLocalPart().equals(IMAGE)) {
                         isImage = false;
-                        image = new FeedImage(imgTitle, imgUrl, imgLink);
+                        image = new RssFeedImage(imgTitle, imgUrl, imgLink);
                         event = eventReader.nextEvent();
                     }
                 }

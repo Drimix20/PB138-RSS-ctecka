@@ -1,28 +1,32 @@
 package pb138.rss.reader.downloader;
 
-import pb138.rss.feed.FeedContainer;
-import pb138.rss.feed.RssFeed;
 import org.apache.log4j.Logger;
+import pb138.rss.feed.Container;
+import pb138.rss.feed.RssFeed;
 
 /**
  *
  * @author Drimal
  */
-public class FeedReaderTask implements Runnable {
+public class RssFeedReaderTask implements Runnable {
 
-    private Logger logger = Logger.getLogger(FeedReaderTask.class);
-    private FeedContainer feedContainer;
-    private FeedReader feedReader;
+    private Logger logger = Logger.getLogger(RssFeedReaderTask.class);
+    private Container feedContainer;
+    private RssFeedReader feedReader;
     private String label;
     private long initialDelay;
     private long scheduledDelay;
 
-    public FeedReaderTask(String label, FeedReader reader, long initialDelay, long scheduledDelay) {
-        feedContainer = FeedContainer.getInstance();
+    public RssFeedReaderTask(String label, RssFeedReader reader, long initialDelay, long scheduledDelay, Container container) {
+        this.feedContainer = container;
         this.label = label;
         this.feedReader = reader;
         this.initialDelay = initialDelay;
         this.scheduledDelay = scheduledDelay;
+    }
+
+    public void setFeedContainer(Container feedContainer) {
+        this.feedContainer = feedContainer;
     }
 
     public String getLabel() {

@@ -5,12 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pb138.rss.feed.RssFeed;
-import pb138.rss.feed.FeedContainer;
+import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.reader.downloader.RssFeedDownloader;
-import pb138.rss.feed.FeedItem;
-import pb138.rss.reader.downloader.FeedReader;
-import pb138.rss.reader.downloader.FeedReaderTask;
+import pb138.rss.feed.RssFeedItem;
+import pb138.rss.reader.downloader.RssFeedReader;
+import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
  *
@@ -19,34 +18,35 @@ import pb138.rss.reader.downloader.FeedReaderTask;
 public class Demo {
 
     public static void main(String[] args) {
-        RssFeed feed;
+        //Vytvoreni kontaineru pro ukladani feedu
+        RssFeedContainer feedContainer = new RssFeedContainer();
 
         //Definovani readeru pro zdroj RSS
-        FeedReader readerZiveCz = new FeedReader("http://www.zive.cz/rss/sc-47/default.aspx?rss=1");
-        FeedReader readerPctuning = new FeedReader("http://pctuning.tyden.cz/index.php?option=com_ninjarsssyndicator&feed_id=3&format=raw");
-        FeedReader readerIdnesKultura = new FeedReader("http://idnes.cz.feedsportal.com/c/34387/f/625944/index.rss");
+        RssFeedReader readerZiveCz = new RssFeedReader("http://www.zive.cz/rss/sc-47/default.aspx?rss=1");
+        RssFeedReader readerPctuning = new RssFeedReader("http://pctuning.tyden.cz/index.php?option=com_ninjarsssyndicator&feed_id=3&format=raw");
+        RssFeedReader readerIdnesKultura = new RssFeedReader("http://idnes.cz.feedsportal.com/c/34387/f/625944/index.rss");
         //Zobrazeni suroveho rss feedu do konzole
         //readerZiveCz.readFeedToSystemOut();
         //readerPctuning.readFeedToSystemOut();
 
-        //Vytvoreni tasku pro scheduler s dobou startu a zpozdeni sbirani dat
-        FeedReaderTask ziveCztask = new FeedReaderTask("ZiveCz", readerZiveCz, 0, 30);
-        FeedReaderTask pcTuningTask = new FeedReaderTask("PcTuning", readerPctuning, 0, 40);
-        FeedReaderTask idnesKulturaTask = new FeedReaderTask("IdnesKultura", readerIdnesKultura, 0, 30);
+        //Vytvoreni tasku pro scheduler s dobou startu a zpozdeni pro sbirani dat
+        RssFeedReaderTask ziveCztask = new RssFeedReaderTask("ZiveCz", readerZiveCz, 0, 30, feedContainer);
+        RssFeedReaderTask pcTuningTask = new RssFeedReaderTask("PcTuning", readerPctuning, 0, 40, feedContainer);
+        RssFeedReaderTask idnesKulturaTask = new RssFeedReaderTask("IdnesKultura", readerIdnesKultura, 0, 30, feedContainer);
 
-        List<FeedReaderTask> tasks = Arrays.asList(pcTuningTask, ziveCztask, idnesKulturaTask);
-        RssFeedDownloader downloader = new RssFeedDownloader(10);
-        downloader.init();
+        List<RssFeedReaderTask> tasks = Arrays.asList(pcTuningTask, ziveCztask, idnesKulturaTask);
+        //Vytvoreni rss downloaderu s definovanym kontainer pro sbirani rss feedu a s maximalne 10 vlakny
+        RssFeedDownloader downloader = new RssFeedDownloader(feedContainer, 10);
         //Spusteni naplanovanych ukolu
         downloader.schedule(tasks);
 
-        //Kontroloa nasbiranych dat
+        //Kontrola prvnich 10 nasbiranych dat pro kazdy definovany zdroj
         waitSeconds(45);
-        FeedContainer instance = FeedContainer.getInstance();
-        for (Iterator<String> iterator = instance.getKeys().iterator(); iterator.hasNext();) {
+
+        for (Iterator<String> iterator = feedContainer.getKeys().iterator(); iterator.hasNext();) {
             String key = iterator.next();
             System.out.println("Zdroj: " + key);
-            List<FeedItem> items = instance.getFromFeedContainer(key).getItems();
+            List<RssFeedItem> items = feedContainer.getFromFeedContainer(key).getItems();
             for (int i = 0; i < 10; i++) {
                 System.out.println(items.get(i));
             }
