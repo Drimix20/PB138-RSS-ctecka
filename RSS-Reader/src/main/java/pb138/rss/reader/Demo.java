@@ -25,6 +25,7 @@ public class Demo {
         RssFeedReader readerZiveCz = new RssFeedReader("http://www.zive.cz/rss/sc-47/default.aspx?rss=1");
         RssFeedReader readerPctuning = new RssFeedReader("http://pctuning.tyden.cz/index.php?option=com_ninjarsssyndicator&feed_id=3&format=raw");
         RssFeedReader readerIdnesKultura = new RssFeedReader("http://idnes.cz.feedsportal.com/c/34387/f/625944/index.rss");
+        RssFeedReader readerHobby = new RssFeedReader("http://servis.idnes.cz/rss.aspx?c=hobby");
         //Zobrazeni suroveho rss feedu do konzole
         //readerZiveCz.readFeedToSystemOut();
         //readerPctuning.readFeedToSystemOut();
@@ -33,6 +34,7 @@ public class Demo {
         RssFeedReaderTask ziveCztask = new RssFeedReaderTask("ZiveCz", readerZiveCz, 0, 30, feedContainer);
         RssFeedReaderTask pcTuningTask = new RssFeedReaderTask("PcTuning", readerPctuning, 0, 40, feedContainer);
         RssFeedReaderTask idnesKulturaTask = new RssFeedReaderTask("IdnesKultura", readerIdnesKultura, 0, 30, feedContainer);
+        RssFeedReaderTask idnesHobbyTask = new RssFeedReaderTask("IdnesHobby", readerHobby, 0, 25, feedContainer);
 
         List<RssFeedReaderTask> tasks = Arrays.asList(pcTuningTask, ziveCztask, idnesKulturaTask);
         //Vytvoreni rss downloaderu s definovanym kontainer pro sbirani rss feedu a s maximalne 10 vlakny
@@ -51,6 +53,14 @@ public class Demo {
                 System.out.println(items.get(i));
             }
         }
+        //odstraneni jednoho zdroje feedu
+        downloader.schedule(Arrays.asList(pcTuningTask, ziveCztask));
+        waitSeconds(45);
+
+        //pridani noveho zdroje feedu
+        downloader.schedule(Arrays.asList(pcTuningTask, ziveCztask, idnesHobbyTask));
+        waitSeconds(45);
+
         downloader.stop();
     }
 

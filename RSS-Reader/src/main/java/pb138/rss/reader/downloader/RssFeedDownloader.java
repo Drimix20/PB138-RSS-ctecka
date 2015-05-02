@@ -1,5 +1,6 @@
 package pb138.rss.reader.downloader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 import pb138.rss.feed.Container;
 
 /**
@@ -15,24 +17,46 @@ import pb138.rss.feed.Container;
  */
 public class RssFeedDownloader {
 
-    //TODO rozsirit o dynamicke pridavani/odebirani tasku
+    private Logger logger = Logger.getLogger(RssFeedDownloader.class);
     private ScheduledExecutorService scheduler;
+    private List<RssFeedReaderTask> oldReaderTasks;
     private Map<String, ScheduledFuture<?>> scheduledTasks;
 
     public RssFeedDownloader(Container container, int size) {
+        oldReaderTasks = new ArrayList<>();
         scheduledTasks = new HashMap<>();
         scheduler = Executors.newScheduledThreadPool(size);
     }
 
     public void schedule(List<RssFeedReaderTask> tasksToSchedule) {
+        logger.info("Task scheduling - numb of tasks: " + tasksToSchedule.size());
+        cancelUnsupportedTasks(tasksToSchedule);
+
         for (RssFeedReaderTask feedReaderTask : tasksToSchedule) {
-            ScheduledFuture<?> scheduleFuture = scheduler.scheduleAtFixedRate(feedReaderTask, feedReaderTask.getInitialDelay(),
+            if (oldReaderTasks.contains(feedReaderTask)) {
+                continue;
+            }
+            ScheduledFuture<?> scheduledFuture = scheduler.scheduleAtFixedRate(feedReaderTask, feedReaderTask.getInitialDelay(),
                     feedReaderTask.getScheduledDelay(), TimeUnit.SECONDS);
-            scheduledTasks.put(feedReaderTask.getLabel(), scheduleFuture);
+            scheduledTasks.put(feedReaderTask.getAssociatedUrl(), scheduledFuture);
+        }
+        oldReaderTasks = tasksToSchedule;
+        logger.info("Tasks were scheduled");
+    }
+
+    private void cancelUnsupportedTasks(List<RssFeedReaderTask> tasksToSchedule) {
+        logger.info("Cancel old tasks");
+        for (RssFeedReaderTask oldTask : oldReaderTasks) {
+            if (!tasksToSchedule.contains(oldTask)) {
+                ScheduledFuture<?> task = scheduledTasks.get(oldTask.getAssociatedUrl());
+                task.cancel(true);
+                logger.info("canceling " + oldTask.getAssociatedUrl());
+            }
         }
     }
 
     public void stop() {
+        logger.info("Stop scheduler");
         if (scheduler != null) {
             scheduler.shutdown();
             scheduler = null;

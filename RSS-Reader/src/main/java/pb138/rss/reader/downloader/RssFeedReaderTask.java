@@ -1,5 +1,6 @@
 package pb138.rss.reader.downloader;
 
+import java.util.Objects;
 import org.apache.log4j.Logger;
 import pb138.rss.feed.Container;
 import pb138.rss.feed.RssFeed;
@@ -29,6 +30,10 @@ public class RssFeedReaderTask implements Runnable {
         this.feedContainer = feedContainer;
     }
 
+    public String getAssociatedUrl() {
+        return feedReader.getUrl();
+    }
+
     public String getLabel() {
         return label;
     }
@@ -39,6 +44,28 @@ public class RssFeedReaderTask implements Runnable {
 
     public long getScheduledDelay() {
         return scheduledDelay;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.feedReader.getUrl());
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RssFeedReaderTask other = (RssFeedReaderTask) obj;
+        if (!Objects.equals(this.feedReader.getUrl(), other.feedReader.getUrl())) {
+            return false;
+        }
+        return true;
     }
 
     @Override
