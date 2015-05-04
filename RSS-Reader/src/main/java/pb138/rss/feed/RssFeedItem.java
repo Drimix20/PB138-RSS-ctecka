@@ -1,5 +1,7 @@
 package pb138.rss.feed;
 
+import java.util.Objects;
+
 /*
  * Represents one RSS message
  */
@@ -58,6 +60,27 @@ public class RssFeedItem {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.title);
+        hash = 53 * hash + Objects.hashCode(this.link);
+        hash = 53 * hash + Objects.hashCode(this.date);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RssFeedItem other = (RssFeedItem) obj;
+        return true;
     }
 
     @Override

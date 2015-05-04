@@ -1,7 +1,7 @@
 package pb138.rss.feed;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /*
  *
@@ -16,7 +16,7 @@ public class RssFeed {
     private final String pubDate;
 
     private RssFeedImage image = new RssFeedImage();
-    private final List<RssFeedItem> items = new ArrayList<RssFeedItem>();
+    private Set<RssFeedItem> items;
 
     public RssFeed() {
         this.title = "";
@@ -25,6 +25,7 @@ public class RssFeed {
         this.language = "";
         this.copyright = "";
         this.pubDate = "";
+        items = new HashSet<>();
     }
 
     public RssFeed(String title, String link, String description, String language,
@@ -35,9 +36,10 @@ public class RssFeed {
         this.language = language;
         this.copyright = copyright;
         this.pubDate = pubDate;
+        items = new HashSet<>();
     }
 
-    public List<RssFeedItem> getItems() {
+    public Set<RssFeedItem> getItems() {
         return items;
     }
 

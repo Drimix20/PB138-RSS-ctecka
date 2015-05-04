@@ -3,6 +3,7 @@ package pb138.rss.reader;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pb138.rss.feed.RssFeedContainer;
@@ -37,8 +38,8 @@ public class Demo {
         RssFeedReaderTask idnesHobbyTask = new RssFeedReaderTask("IdnesHobby", readerHobby, 0, 25, feedContainer);
 
         List<RssFeedReaderTask> tasks = Arrays.asList(pcTuningTask, ziveCztask, idnesKulturaTask);
-        //Vytvoreni rss downloaderu s definovanym kontainer pro sbirani rss feedu a s maximalne 10 vlakny
-        RssFeedDownloader downloader = new RssFeedDownloader(feedContainer, 10);
+        //Vytvoreni rss downloaderu s definovanym kontainer pro sbirani rss feedu a s maximalne 3 vlakny
+        RssFeedDownloader downloader = new RssFeedDownloader(feedContainer, 3);
         //Spusteni naplanovanych ukolu
         downloader.schedule(tasks);
 
@@ -48,9 +49,9 @@ public class Demo {
         for (Iterator<String> iterator = feedContainer.getKeys().iterator(); iterator.hasNext();) {
             String key = iterator.next();
             System.out.println("Zdroj: " + key);
-            List<RssFeedItem> items = feedContainer.getFromFeedContainer(key).getItems();
-            for (int i = 0; i < 10; i++) {
-                System.out.println(items.get(i));
+            Set<RssFeedItem> items = feedContainer.getFromFeedContainer(key).getItems();
+            for (Iterator<RssFeedItem> it = items.iterator(); it.hasNext();) {
+                System.out.println(it.next());
             }
         }
         //odstraneni jednoho zdroje feedu
