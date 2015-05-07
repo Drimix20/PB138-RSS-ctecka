@@ -260,8 +260,8 @@ public class ReaderUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                               
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        System.exit(0);
     }                                           
 
     /**
