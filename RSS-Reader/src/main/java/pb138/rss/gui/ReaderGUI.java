@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pb138.rss.gui;
+package pb138.gui;
 
 /**
  * 
@@ -28,8 +28,6 @@ public class ReaderUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         addFeedButton = new javax.swing.JButton();
         removeFeedButton = new javax.swing.JButton();
@@ -37,27 +35,14 @@ public class ReaderUI extends javax.swing.JFrame {
         showAllButton = new javax.swing.JButton();
         addToCatButton = new javax.swing.JButton();
         feedSelector = new javax.swing.JComboBox();
-        categorySelector = new javax.swing.JComboBox();
         removeFromCatButton = new javax.swing.JButton();
         createCatButton = new javax.swing.JButton();
         deleteCatButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-
-        jButton7.setText("Remove Feed");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setText("Remove Feed");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
+        categorySelector = new javax.swing.JComboBox();
+        
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,8 +99,6 @@ public class ReaderUI extends javax.swing.JFrame {
             }
         });
 
-        categorySelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         removeFromCatButton.setText("Remove from Category");
         removeFromCatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +137,13 @@ public class ReaderUI extends javax.swing.JFrame {
         jTextPane1.setText(initialText);
         jScrollPane2.setViewportView(jTextPane1);
 
+        categorySelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        categorySelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categorySelectorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,9 +168,9 @@ public class ReaderUI extends javax.swing.JFrame {
                             .addComponent(createCatButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(removeFromCatButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deleteCatButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(categorySelector, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(feedSelector, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(categorySelector, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -242,15 +232,11 @@ public class ReaderUI extends javax.swing.JFrame {
 
     private void feedSelectorActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
-    }                                            
+    }                                             
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
-    }                                        
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+    }                                                   
 
     private void createCatButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
@@ -260,9 +246,11 @@ public class ReaderUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                               
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
         System.exit(0);
     }                                           
+    
 
     /**
      * @param args the command line arguments
@@ -302,8 +290,6 @@ public class ReaderUI extends javax.swing.JFrame {
     private javax.swing.JButton createCatButton;
     private javax.swing.JButton deleteCatButton;
     private javax.swing.JComboBox feedSelector;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
