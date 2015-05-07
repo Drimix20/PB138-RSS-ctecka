@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pb138.gui;
+package pb138.rss.gui;
 
 /**
  * 
