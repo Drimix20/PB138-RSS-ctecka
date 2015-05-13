@@ -4,7 +4,8 @@ import java.util.Objects;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeedImage {
 

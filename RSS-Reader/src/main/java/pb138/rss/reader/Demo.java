@@ -14,7 +14,8 @@ import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class Demo {
 

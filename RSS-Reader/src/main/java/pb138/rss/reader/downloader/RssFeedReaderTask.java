@@ -7,7 +7,8 @@ import pb138.rss.feed.RssFeed;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeedReaderTask implements Runnable {
 

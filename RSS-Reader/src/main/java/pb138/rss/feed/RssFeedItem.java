@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /*
  * Represents one RSS message
+ *
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeedItem {
 

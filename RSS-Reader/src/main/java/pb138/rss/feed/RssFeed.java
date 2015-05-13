@@ -4,7 +4,8 @@ import java.util.Set;
 import java.util.HashSet;
 
 /*
- *
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeed {
 

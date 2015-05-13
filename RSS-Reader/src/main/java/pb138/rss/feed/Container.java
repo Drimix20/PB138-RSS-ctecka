@@ -4,7 +4,8 @@ import java.util.Set;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public interface Container {
 

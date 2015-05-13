@@ -13,7 +13,8 @@ import pb138.rss.feed.Container;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeedDownloader {
 

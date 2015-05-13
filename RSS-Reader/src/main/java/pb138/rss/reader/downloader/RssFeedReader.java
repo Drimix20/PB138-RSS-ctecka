@@ -15,7 +15,8 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Drimal
+ * @author Martin Drimal
+ * @UCO 373769
  */
 public class RssFeedReader {
 
