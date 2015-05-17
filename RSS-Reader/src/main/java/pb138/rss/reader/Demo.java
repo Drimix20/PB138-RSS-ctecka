@@ -9,8 +9,11 @@ import java.util.logging.Logger;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.reader.downloader.RssFeedDownloader;
 import pb138.rss.feed.RssFeedItem;
+import pb138.rss.file.RssFileReader;
+import pb138.rss.file.RssFileWriter;
 import pb138.rss.reader.downloader.RssFeedReader;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
+import pb138.rss.reader.downloader.StringRssFeedReader;
 
 /**
  *
@@ -64,6 +67,33 @@ public class Demo {
         waitSeconds(45);
 
         downloader.stop();
+        
+        // writer ktorý zapíše obsah RssFeedContaineru do súboru
+        RssFileWriter writer = new RssFileWriter(feedContainer, "skuska.xml");
+        Thread thread = new Thread(writer);
+        thread.start();
+        
+        waitSeconds(5);
+        
+        RssFeedContainer feedContainer2 = new RssFeedContainer();
+        // reader ktorý načíta dáta zo súboru do RssFeedContaineru
+        RssFileReader reader = new RssFileReader(feedContainer2, "skuska.xml");
+        Thread thread2 = new Thread(reader);
+        thread2.start();
+        
+        waitSeconds(5);
+        
+        // vypísanie načítaného containeru
+        for (Iterator<String> iterator = feedContainer2.getKeys().iterator(); iterator.hasNext();) {
+            String key = iterator.next();
+            System.out.println("Zdroj: " + key);
+            Set<RssFeedItem> items = feedContainer2.getFromFeedContainer(key).getItems();
+            for (Iterator<RssFeedItem> it = items.iterator(); it.hasNext();) {
+                System.out.println(it.next());
+            }
+        }
+        
+        
     }
 
     private static void waitSeconds(int seconds) {

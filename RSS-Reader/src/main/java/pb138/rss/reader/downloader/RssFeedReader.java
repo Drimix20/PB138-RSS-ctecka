@@ -199,7 +199,7 @@ public class RssFeedReader {
      *
      * @return otevreny stream rss kanalu
      */
-    private InputStream read() {
+    public InputStream read() {
         try {
             return url.openStream();
         } catch (IOException e) {
