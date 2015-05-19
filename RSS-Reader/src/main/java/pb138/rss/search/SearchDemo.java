@@ -1,7 +1,5 @@
 package pb138.rss.search;
 
-import category.Category;
-import category.CategoryManagerImpl;
 import java.util.Set;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
