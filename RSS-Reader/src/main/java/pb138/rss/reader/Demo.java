@@ -1,6 +1,5 @@
 package pb138.rss.reader;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -24,9 +23,6 @@ import pb138.rss.reader.downloader.RssFeedReaderTask;
 public class Demo {
 
     public static void main(String[] args) throws FileNotFoundException {
-
-        FileInputStream in = new FileInputStream("test.txt");
-
         //Vytvoreni kontaineru pro ukladani feedu
         RssFeedContainer feedContainer = new RssFeedContainer();
 

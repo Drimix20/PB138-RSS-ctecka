@@ -1,9 +1,14 @@
 package pb138.rss.gui;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pb138.rss.configuration.ConfigurationLoader;
+import pb138.rss.configuration.ConfigurationSaver;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.reader.downloader.RssFeedDownloader;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
@@ -29,10 +34,14 @@ public class ReaderUI extends javax.swing.JFrame {
         feedContainer = new RssFeedContainer();
         downloader = new RssFeedDownloader(feedContainer, 3);
 
-        //TODO nahrani konfigurace ulozenych tasku (aby aplikace navazala na stahovani tasku,
-        // ktere byly nakonfigurovany pri minulem spusteni
-        //Spusteni naplanovanych ukolu
-        //downloader.schedule(tasks);
+        try {
+            File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
+            ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
+            tasks = loader.loadConfiguration();
+        } catch (Exception ex) {
+            Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        downloader.schedule(tasks);
     }
 
     /**
@@ -276,8 +285,30 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        try {
+            File outputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
+            ConfigurationSaver saver = new ConfigurationSaver(outputFile);
+            saver.saveConfiguration(tasks);
+        } catch (Exception ex) {
+            Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.exit(0);
+    }
+
+    private String getJarContainingFolder(Class aclass) throws Exception {
+        CodeSource codeSource = aclass.getProtectionDomain().getCodeSource();
+
+        File jarFile;
+
+        if (codeSource.getLocation() != null) {
+            jarFile = new File(codeSource.getLocation().toURI());
+        } else {
+            String path = aclass.getResource(aclass.getSimpleName() + ".class").getPath();
+            String jarFilePath = path.substring(path.indexOf(":") + 1, path.indexOf("!"));
+            jarFilePath = URLDecoder.decode(jarFilePath, "UTF-8");
+            jarFile = new File(jarFilePath);
+        }
+        return jarFile.getParentFile().getAbsolutePath();
     }
 
     /**
