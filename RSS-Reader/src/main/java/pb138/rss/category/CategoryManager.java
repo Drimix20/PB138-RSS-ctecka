@@ -2,6 +2,7 @@ package category;
 
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
+import java.util.Set;
 
 /**
  *
@@ -9,7 +10,8 @@ import pb138.rss.feed.RssFeedContainer;
  */
 public interface CategoryManager {
     
-    public void createCategory(Category category);
+    public void createCategory(Category category);    
     public void deleteCategory(RssFeedContainer container, Category category);
-    public void showFeedsInCategory(RssFeedContainer container, Category category);
+    public Set<Category> getAllCategories();
+    public Set<RssFeed> showFeedsInCategory(RssFeedContainer container, Category category);
 }
