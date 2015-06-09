@@ -2,6 +2,7 @@ package pb138.rss.feed;
 
 import java.util.Set;
 import java.util.HashSet;
+import pb138.rss.category.Category;
 
 /*
  * @author Martin Drimal
@@ -82,4 +83,15 @@ public class RssFeed {
                 + ", language=" + language + ", link=" + link + ", pubDate="
                 + pubDate + ", title=" + title + ", items=" + items.size() + "]";
     }
+    
+    private Category category;
+    
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    public Category getCategory() {
+        return this.category;
+    }
+    
 }
