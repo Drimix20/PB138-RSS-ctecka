@@ -9,9 +9,7 @@ import pb138.rss.feed.RssFeedContainer;
  */
 public interface CategoryManager {
     
-    public void createCategory(Category category);    
-    public void addToCategory(RssFeed feed, Category category);    
-    public void deleteFromCategory(RssFeed feed, Category category);
+    public void createCategory(Category category);
     public void deleteCategory(RssFeedContainer container, Category category);
-    public void searchByCategory(RssFeedContainer container, Category category);
+    public void showFeedsInCategory(RssFeedContainer container, Category category);
 }
