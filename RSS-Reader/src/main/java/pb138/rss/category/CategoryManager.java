@@ -1,8 +1,7 @@
-package category;
+package pb138.rss.category;
 
-import pb138.rss.feed.RssFeed;
-import pb138.rss.feed.RssFeedContainer;
 import java.util.Set;
+import pb138.rss.feed.RssFeedContainer;
 
 /**
  *
