@@ -1,4 +1,4 @@
-package category;
+package pb138.rss.category;
 
 import java.util.Objects;
 
