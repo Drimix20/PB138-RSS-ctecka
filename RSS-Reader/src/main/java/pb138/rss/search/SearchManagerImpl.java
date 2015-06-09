@@ -20,56 +20,58 @@ public class SearchManagerImpl implements SearchManager {
      * @param all if true then all queries else any query from set queries
      */
     @Override
-    public void runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all) {
+    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all) {
         
-        boolean printF = true;
-        boolean printI = true;
+        RssFeedContainer filtered = new RssFeedContainer();
+        boolean oneQuery;
+        boolean allQueries;
         for (String key : container.getKeys()) {
             RssFeed result = container.getFromFeedContainer(key);
+            allQueries = true;
+            oneQuery = false;
             for (SearchQuery query : queries) {
                 if (!query.matchFeed(result)) {
                     if(all)
-                        printF = false;
+                        allQueries = false;
                 }
-                else System.out.println(result);
+                else oneQuery = true;
             }
-            if (printF && all) {
-                System.out.println(result);
-                printF = true;
+            if (all) {
+                if (allQueries)
+                    filtered.putIntoFeedContainer(key, result);
             }
-            for (RssFeedItem result2 : result.getItems()) {
-                for (SearchQuery query : queries) { 
-                    if (!query.matchItem(result2)) {
-                        if(all)
-                            printI = false;
-                    }
-                    else System.out.println(result2);
-                }
-                if (printI && all) {
-                    System.out.println(result2);
-                    printI = true;
-                }
-            }
+            else if (oneQuery)
+                filtered.putIntoFeedContainer(key, result);
+            else if (runSearchForFeed(result, queries, all) != null)
+                filtered.putIntoFeedContainer(key, result);
         }
+        return filtered;
     }
-    
+ 
     @Override
-    public void runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all) {
+    public Set<RssFeedItem> runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all) {
     
-        boolean printI = true;  
+        Set<RssFeedItem> filtered = new HashSet<>();
+        boolean oneQuery;
+        boolean allQueries;
         for (RssFeedItem result : feed.getItems()) {
+            allQueries = true;
+            oneQuery = false;
             for (SearchQuery query : queries) {
                 if (!query.matchItem(result)) {
                     if(all) 
-                        printI = false;
+                        allQueries = false;
                 }
-                else System.out.println(result);
+                else oneQuery = true;
             }
-            if (printI && all) {
-                System.out.println(result);
-                printI = true;
+            if (all) {
+                if (allQueries)
+                    filtered.add(result);
             }
+            else if (oneQuery)
+                filtered.add(result);            
         }
+        return filtered;
     }
     
 }
