@@ -1,5 +1,6 @@
 package pb138.rss.search;
 
+import java.util.HashSet;
 import java.util.Set;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
