@@ -3,6 +3,7 @@ package pb138.rss.search;
 import java.util.Set;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
+import pb138.rss.feed.RssFeedItem;
 
 /**
  *
@@ -10,6 +11,6 @@ import pb138.rss.feed.RssFeedContainer;
  */
 public interface SearchManager {
     
-    public void runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all);
-    public void runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all);
+    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all);
+    public Set<RssFeedItem> runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all);
 }
