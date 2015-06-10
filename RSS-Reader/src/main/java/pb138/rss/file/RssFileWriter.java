@@ -1,5 +1,6 @@
 package pb138.rss.file;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -9,7 +10,20 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.feed.RssFeedItem;
@@ -38,43 +52,72 @@ public class RssFileWriter implements Runnable {
     @Override
     public void run() {
         logger.info("Writing to file: " + filePath);
-        String fileContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-        fileContent += "<sources>";
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder;
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            java.util.logging.Logger.getLogger(RssFileWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        Document doc = docBuilder.newDocument();
+        Element sources = doc.createElement("sources");
+        doc.appendChild(sources);
+        
         for (String key : feedContainer.getKeys()) {
             RssFeed feed = feedContainer.getFromFeedContainer(key);
+            Element source = doc.createElement("source");
             try {
-                fileContent += "<source url=\"" + URLEncoder.encode(key, "UTF-8") + "\">";
+                source.setAttribute("url", URLEncoder.encode(key, "UTF-8"));
             } catch (UnsupportedEncodingException ex) {
                 logger.error("Incorrect encoding", ex);
                 return;
             }
-            fileContent += "<title><![CDATA[ " + feed.getTitle() + " ]]></title>";
-            fileContent += "<link><![CDATA[" + feed.getLink() + "]]></link>";
-            fileContent += "<description><![CDATA[" + feed.getDescription() + "]]></description>";
-            fileContent += "<language><![CDATA[" + feed.getLanguage() + "]]></language>";
-            fileContent += "<copyright><![CDATA[" + feed.getCopyright() + "]]></copyright>";
-            fileContent += "<pubDate><![CDATA[" + feed.getPubDate() + "]]></pubDate>";
+            String category = feed.getCategory() != null ? feed.getCategory().getName() : "none";
+            source.setAttribute("category", category);
+            source.appendChild(this.createCdataElement("title", feed.getTitle(), doc));
+            source.appendChild(this.createCdataElement("link", feed.getLink(), doc));
+            source.appendChild(this.createCdataElement("description", feed.getDescription(), doc));
+            source.appendChild(this.createCdataElement("language", feed.getLanguage(), doc));
+            source.appendChild(this.createCdataElement("copyright", feed.getCopyright(), doc));
+            source.appendChild(this.createCdataElement("pubDate", feed.getPubDate(), doc));
             Set<RssFeedItem> items = feed.getItems();
             for (Iterator<RssFeedItem> it = items.iterator(); it.hasNext();) {
                 RssFeedItem item = it.next();
-                fileContent += "<item>";
-                fileContent += "<title><![CDATA[ " + item.getTitle() + " ]]></title>";
-                fileContent += "<description><![CDATA[" + item.getDescription() + "]]></description>";
-                fileContent += "<link><![CDATA[" + item.getLink() + "]]></link>";
-                fileContent += "<date><![CDATA[" + item.getDate() + "]]></date>";
-                fileContent += "<author><![CDATA[" + item.getAuthor() + "]]></author>";
-                fileContent += "<guid><![CDATA[" + item.getGuid() + "]]></guid>";
-                fileContent += "</item>";
+                Element itemElement = doc.createElement("item");
+                itemElement.appendChild(this.createCdataElement("title", item.getTitle(), doc));
+                itemElement.appendChild(this.createCdataElement("description", item.getDescription(), doc));
+                itemElement.appendChild(this.createCdataElement("link", item.getLink(), doc));
+                itemElement.appendChild(this.createCdataElement("date", item.getDate(), doc));
+                itemElement.appendChild(this.createCdataElement("author", item.getAuthor(), doc));
+                itemElement.appendChild(this.createCdataElement("guid", item.getGuid(), doc));
+                source.appendChild(itemElement);
             }
-            fileContent += "</source>";
+            sources.appendChild(source);
         }
-        fileContent += "</sources>";
         
-        try (PrintWriter writer = new PrintWriter(this.filePath, "UTF-8")) {
-            writer.println(fileContent);
-        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            logger.error("Error while writing to file: " + this.filePath , ex);
+        Transformer transformer = null;
+        try {
+            transformer = TransformerFactory.newInstance().newTransformer();
+        } catch (TransformerConfigurationException ex) {
+            logger.error(ex);
+            return;
         }
+        Result output = new StreamResult(new File(this.filePath));
+        Source input = new DOMSource(doc);
+
+        try {
+            transformer.transform(input, output);
+        } catch (TransformerException ex) {
+            logger.error(ex);
+        }
+        
+    }
+    
+    private Element createCdataElement(String name, String data, Document doc) {
+        Element element = doc.createElement(name);
+        element.appendChild(doc.createCDATASection(data));
+        return element;
     }
     
 }

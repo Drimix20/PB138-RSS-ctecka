@@ -22,7 +22,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import pb138.rss.category.Category;
 import pb138.rss.reader.downloader.StringRssFeedReader;
+import pb138.rss.schema.SchemaValidator;
 
 /**
  *
@@ -46,6 +48,14 @@ public class RssFileReader implements Runnable {
     @Override
     public void run() {
         logger.info("Reading from file: " + filePath);
+        
+        String schemaPath = "./src/main/java/pb138/rss/schema/sources.xsd";
+        SchemaValidator validator = new SchemaValidator(schemaPath);
+        if (!validator.valid(filePath)){
+            logger.error("Saved file does not match schema");
+            throw new RuntimeException("Saved file does not match schema");
+        }
+        
         Document doc;
         try {
             doc = newXmlDocument(filePath);
@@ -68,6 +78,7 @@ public class RssFileReader implements Runnable {
 
             StringRssFeedReader feedReader = new StringRssFeedReader(url, text);
             RssFeed feed = feedReader.readFeed();
+            feed.setCategory(new Category(sourceElement.getAttribute("category")));
             feedContainer.putIntoFeedContainer(url, feed);
         }
     }

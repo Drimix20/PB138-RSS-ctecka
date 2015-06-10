@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    <xs:element name="sources">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="source" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="link" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="language" type="xs:string"/>
+                            <xs:element name="copyright" type="xs:string"/>
+                            <xs:element name="pubDate" type="xs:string"/>
+                            <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="title" type="xs:string"/>
+                                        <xs:element name="description" type="xs:string"/>
+                                        <xs:element name="link" type="xs:string"/>
+                                        <xs:element name="date" type="xs:string"/>
+                                        <xs:element name="author" type="xs:string"/>
+                                        <xs:element name="guid" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="category" type="xs:string" use="required"/>
+                        <xs:attribute name="url" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
