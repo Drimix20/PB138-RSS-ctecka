@@ -19,7 +19,7 @@ and open the template in the editor.
                             <xs:element name="url" type="xs:string" minOccurs="1" maxOccurs="1"/>
                             <xs:element name="init" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
                             <!--v pripade, ze refresh interval sa da vybrat iba z urcitych hodnot, by bolo fajn zadefinovat refreshType povolujuci iba tie hodnoty-->
-                            <xs:element name="refresh" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="refresh" type="xs:positiveInteger" minOccurs="1" maxOccurs="1"/>
                         </xs:sequence>
                         <xs:attribute name="name" type="xs:string"/>
                     </xs:complexType>
