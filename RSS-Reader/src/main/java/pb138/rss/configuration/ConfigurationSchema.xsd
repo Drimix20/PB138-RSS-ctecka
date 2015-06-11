@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    
+    <xs:element name="sources">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="source"  minOccurs="0" maxOccurs="unbounded">
+                    <!--"cisty" konfiguracny subor obsahujuci iba prazdny korenovy element sources je validny-->
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="url" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="init" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+                            <!--v pripade, ze refresh interval sa da vybrat iba z urcitych hodnot, by bolo fajn zadefinovat refreshType povolujuci iba tie hodnoty-->
+                            <xs:element name="refresh" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>    
+
+</xs:schema>
