@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!--testovy konfiguracny subor-->
+<sources>
+    <source name="DSL.sk">
+        <url>http://www.dsl.sk/export/rss_articles.php</url>
+        <init>0</init>
+        <refresh>30</refresh>        
+    </source>
+    <source name="Živě.cz">
+        <url>http://www.zive.cz/rss/sc-47/</url>
+        <init>0</init>
+        <refresh>30</refresh>        
+    </source>
+    <source name="The Guardian">
+        <url>http://www.theguardian.com/world/rss</url>
+        <init>0</init>
+        <refresh>60</refresh>        
+    </source>
+</sources>
