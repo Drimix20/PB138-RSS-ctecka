@@ -347,7 +347,7 @@ public class ReaderUI extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify
+    // Variables declaration - do not modify //GEN-BEGIN:variables
     private javax.swing.JButton addFeedButton;
     private javax.swing.JButton addToCatButton;
     private javax.swing.JComboBox categorySelector;
@@ -362,5 +362,5 @@ public class ReaderUI extends javax.swing.JFrame {
     private javax.swing.JButton removeFromCatButton;
     private javax.swing.JButton selectCatButton;
     private javax.swing.JButton showAllButton;
-    // End of variables declaration
+    // End of variables declaration //GEN-END:variables
 }
