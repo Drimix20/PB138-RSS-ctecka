@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import pb138.rss.configuration.ConfigurationLoader;
 import pb138.rss.configuration.ConfigurationSaver;
@@ -266,6 +267,7 @@ public class ReaderUI extends javax.swing.JFrame {
         RemoveFeedDialog dialog = new RemoveFeedDialog(this, rootPaneCheckingEnabled,
                 "Select configuration for remove:", "Remove", "Cancel", labels);
         dialog.setFeedReaderTask(tasks);
+        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
 
         waitForStatus(dialog.getReturnStatus());
@@ -296,7 +298,7 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void removeFromCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        //TODO add your handling code here:
     }
 
     private void feedSelectorActionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,15 +306,23 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        SelectCategoryDialog dialog = new SelectCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void createCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        NewCategoryDialog dialog = new NewCategoryDialog(this, rootPaneCheckingEnabled);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void deleteCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        //TODO empty list ma byt list kategorii
+        DeleteCategoryDialog dialog = new DeleteCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {

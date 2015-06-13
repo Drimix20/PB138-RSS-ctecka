@@ -2,7 +2,6 @@ package pb138.rss.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -12,16 +11,14 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import pb138.rss.gui.renderer.CheckboxListCellRenderer;
-import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
  *
  * @author Drimal
  */
-public class RemoveFeedDialog extends javax.swing.JDialog {
+public class SelectCategoryDialog extends javax.swing.JDialog {
 
     private DefaultListModel<String> listModel;
-    private List<RssFeedReaderTask> feedReaderTask;
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -32,17 +29,16 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
     public static final int RET_OK = 1;
 
     /**
-     * Creates new form RemoveFeedDialog
+     * Creates new form SelectCategorylDialog
      */
-    public RemoveFeedDialog(java.awt.Frame parent, boolean modal, String dialogLabel, String leftButtonLabel, String rightButtonLabel,
-            List<String> labelValues) {
+    public SelectCategoryDialog(java.awt.Frame parent, boolean modal, List<String> labelValues) {
         super(parent, modal);
 
         this.listModel = createListModel(labelValues);
         initComponents();
-        this.leftButton.setText(leftButtonLabel);
-        this.rightlButton.setText(rightButtonLabel);
-        this.textLabel.setText(dialogLabel);
+        this.leftButton.setText("Filter");
+        this.rightButton.setText("Cancel");
+        this.dialogLabel.setText("Select categories for filtering:");
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -54,10 +50,6 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
-    }
-
-    public void setFeedReaderTask(List<RssFeedReaderTask> feedReaderTask) {
-        this.feedReaderTask = feedReaderTask;
     }
 
     private DefaultListModel<String> createListModel(List<String> labelValues) {
@@ -86,12 +78,11 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         leftButton = new javax.swing.JButton();
-        rightlButton = new javax.swing.JButton();
-        textLabel = new javax.swing.JLabel();
+        rightButton = new javax.swing.JButton();
+        dialogLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        setTitle("Remove Feed Source");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -105,17 +96,16 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
             }
         });
 
-        rightlButton.setText("Cancel");
-        rightlButton.addActionListener(new java.awt.event.ActionListener() {
+        rightButton.setText("Cancel");
+        rightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rightlButtonActionPerformed(evt);
+                rightButtonActionPerformed(evt);
             }
         });
 
-        textLabel.setText("DEFAULT");
+        dialogLabel.setText("Default");
 
-        jList1.setModel(listModel);
-        jList1.setToolTipText("");
+        jList1.setModel(this.listModel);
         jList1.setCellRenderer(new CheckboxListCellRenderer());
         jScrollPane1.setViewportView(jList1);
 
@@ -126,27 +116,31 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 136, Short.MAX_VALUE)
-                        .addComponent(leftButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 130, Short.MAX_VALUE)
+                        .addComponent(leftButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rightlButton))
+                        .addComponent(rightButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(textLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dialogLabel)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {leftButton, rightButton});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(textLabel)
+                .addContainerGap()
+                .addComponent(dialogLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rightlButton)
+                    .addComponent(rightButton)
                     .addComponent(leftButton))
                 .addContainerGap())
         );
@@ -157,20 +151,12 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftButtonActionPerformed
-        int[] selectedIndices = jList1.getSelectedIndices();
-        final List<RssFeedReaderTask> tasksToDelete = new ArrayList<>();
-        for (int i = 0; i < selectedIndices.length; i++) {
-            tasksToDelete.add(this.feedReaderTask.get(i));
-        }
-        for (RssFeedReaderTask task : tasksToDelete) {
-            feedReaderTask.remove(task);
-        }
         doClose(RET_OK);
     }//GEN-LAST:event_leftButtonActionPerformed
 
-    private void rightlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightlButtonActionPerformed
+    private void rightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightButtonActionPerformed
         doClose(RET_CANCEL);
-    }//GEN-LAST:event_rightlButtonActionPerformed
+    }//GEN-LAST:event_rightButtonActionPerformed
 
     /**
      * Closes the dialog
@@ -202,27 +188,21 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RemoveFeedDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RemoveFeedDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RemoveFeedDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RemoveFeedDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RemoveFeedDialog dialog = new RemoveFeedDialog(new javax.swing.JFrame(), true, "Test", "leftButton", "rightButton", Arrays.asList("Test 1", "Test 2", "Test 3"));
+                SelectCategoryDialog dialog = new SelectCategoryDialog(new javax.swing.JFrame(), true, Arrays.asList("Item1"));
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -235,11 +215,11 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel dialogLabel;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    protected javax.swing.JButton leftButton;
-    private javax.swing.JButton rightlButton;
-    public javax.swing.JLabel textLabel;
+    private javax.swing.JButton leftButton;
+    private javax.swing.JButton rightButton;
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;
