@@ -1,0 +1,715 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<title>Feedy</title>
+<style>
+                    body {
+                        font-family: Arial
+                    }
+                    
+                    .container {
+                        width: 900px;
+                        margin: 0px auto;
+                        position: relative;
+                    }
+                    
+                    .categories {
+                        width: 200px;
+                        position: absolute;
+                        overflow: auto;
+                    }
+                    
+                    .categories h3 {
+                        color: green;
+                    }
+                    
+                    .categories a {
+                        color: black;
+                        text-decoration: none;
+                    }
+                    
+                    .content {
+                        width: 700px;
+                        position: absolute;
+                        left: 200px;
+                    }
+                    
+                    .categories ul {
+                        list-style-type: none;
+                        padding-left: 0px;
+                        font-size: 20px;
+                    }
+                    
+                    .item h3 {
+                        clear: both;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .item h3 a {
+                        color: green;
+                    }
+                    
+                    .item .date {
+                        color: grey;
+                        font-size: 12px;
+                    }
+                    
+                    .item img {
+                        float: left;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                    }
+                    
+                    a.active {
+                        color: black;
+                    }
+                    
+                    .arrows {
+                        display: none;
+                    }
+                </style>
+</head>
+<body>
+<div class="container">
+<div class="categories">
+<h3>Kateg&oacute;rie</h3>
+<ul>
+<li>
+<a class="category-href" data-category="Aut&aacute;" href="javascript:;">Aut&aacute;<span class="arrows">&nbsp;&gt;&gt;</span></a>
+</li>
+<li>
+<a class="category-href" data-category="Mobily" href="javascript:;">Mobily<span class="arrows">&nbsp;&gt;&gt;</span></a>
+</li>
+<li>
+<a class="category-href" data-category="none" href="javascript:;">
+                                                Bez kateg&oacute;rie
+                                            <span class="arrows">&nbsp;&gt;&gt;</span></a>
+</li>
+<li>
+<a class="category-href" data-category="Poč&iacute;tače" href="javascript:;">Poč&iacute;tače<span class="arrows">&nbsp;&gt;&gt;</span></a>
+</li>
+</ul>
+</div>
+<div class="content">
+<div id="Aut&aacute;" class="content-category">
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/prvni-dojmy-jursky-svet-08p-/filmvideo.aspx?c=A150610_140214_filmvideo_spm#utm_source=rss">PRVN&Iacute; DOJMY: Jursk&yacute; svět m&aacute; sp&aacute;d, vtip a fanouškovskou duši</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 12:46:00 GMT</span>
+<p>Dinosauři jsou zpět a mohou od zítřka znovu bourat pokladny kin. Po prvním Jurském parku z roku 1993 za to stojí i první Jurský svět. Nejen kvůli trikům, považovaným už za samozřejmost. Ale hlavně pro fanouškovskou duši, která z restartu legendy dýchá.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/baarova-dotoceno-0k6-/filmvideo.aspx?c=A150607_215158_filmvideo_spm#utm_source=rss">Hitler řeš&iacute; Goebbelsovy l&aacute;sky. Vznikly posledn&iacute; sc&eacute;ny L&iacute;dy Baarov&eacute;</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 19:38:00 GMT</span>
+<p>Lída Baarová u Adolfa Hitlera, Magda Goebbelsová u Adolfa Hitlera. Jako poslední scény filmu Filipa Renče se točily situace, kdy vůdce řešil problémy svého ministra propagandy s jeho milenkou a manželkou. „Natočil jsem Lídu Baarovou přesně podle plánu a svých představ, bez kompromisů,“ věří Renč.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/zemrel-james-last-0zb-/hudba.aspx?c=A150610_134650_hudba_ob#utm_source=rss">Zemřel slavn&yacute; kapeln&iacute;k James Last. Prodal přes 80 milionů desek</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 11:48:00 GMT</span>
+<p>Známý německý hudební skladatel a dirigent James Last, vlastním jménem Hans Last, v úterý zemřel ve věku 86 let. Oznámila to agentura DPA s odvoláním na informaci společnosti Semmel Concerts, podle níž umělec skonal na Floridě.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/klip-pipes-pints-0k3-/hudba.aspx?c=A150609_143551_hudba_vdr#utm_source=rss">VIDEO: Pipes </a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 14:58:00 GMT</span>
+<p>Populární punková kapela, která zaujala soundem postaveným na dudách, natočila před festivalovou sezonou nový klip k písni Warpath 82. Na iDNES.cz se na něj můžete podívat v premiéře. </p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/petr-novak-je-vystaven-v-popmuseu-drt-/hudba.aspx?c=A150609_104655_hudba_ob#utm_source=rss">Vydejte se po špičk&aacute;ch za Petrem Nov&aacute;kem. Do Popmusea</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 10:29:00 GMT</span>
+<p>Po úspěšné procházce po pražských hudebních klubech mění pražské Popmuseum kurs. Svou druhou letošní výstavu zasvětí "životu, dílu a době" Petra Nováka, jednoho z nejvýraznějších zpěváků a autorů české rockové historie.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/padesat-odstinu-pokracovani-dgl-/literatura.aspx?c=A150610_123553_literatura_ts#utm_source=rss">Policie p&aacute;tr&aacute;, zda pokračov&aacute;n&iacute; erotick&eacute; trilogie neuniklo na čern&yacute; trh</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 10:58:00 GMT</span>
+<p>Nová kniha E. L. Jamesové už zřejmě unikla na internet. A to uplynulo jen pár dní od chvíle, kdy britská spisovatelka slavnostně oznámila, že se její trojdílný erotický thriller Padesát odstínů dočká čtvrtého pokračování.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/kurt-cobain-dokument-montage-of-heck-recenze-fmt-/hudba.aspx?c=A150609_130254_hudba_vha#utm_source=rss">RECENZE: Strhuj&iacute;c&iacute; př&iacute;běh o Cobainovi možn&aacute; přid&aacute;v&aacute; jen dalš&iacute; iluzi</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 13:38:00 GMT</span>
+<p>O snímku Montage of Heck od režiséra Bretta Morgena se píše jako o nejlepším portrétu hudebníka v historii. Rozhodně nejintimnějším, přestože je možná jen dalším budováním mýtu geniálního mluvčího své generace, o nějž sám Kurt Cobain nestál.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/macbeth-opera-00o-/divadlo.aspx?c=A150610_133206_divadlo_ts#utm_source=rss">Kobyla sežere mlad&eacute;, noc se převr&aacute;t&iacute; v den. V Macbethovi udeř&iacute; př&iacute;roda</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 14:45:00 GMT</span>
+<p>Verdiho hudební drama Macbeth, komponované podle Shakespearovy divadelní hry, bude poslední operní novinkou letošní sezony Národního divadla.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/nate-ruess-cela-deska-05f-/hudba.aspx?c=A150609_105608_hudba_vdr#utm_source=rss">AUDIO: Poslechněte si cel&yacute; s&oacute;lov&yacute; debut Nate Ruesse z kapely Fun</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 09:15:00 GMT</span>
+<p>Hlavní postava populární formace Fun pojmenovala svou první sólovou desku Grand Romantic. Album, které vychází 15. 6. 2015, si na iDNES.cz můžete celé poslechnout v předpremiéře. </p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/recenze-kiss-koncert-praha-d0u-/hudba.aspx?c=A150609_002147_hudba_vdr#utm_source=rss">RECENZE: Kiss neměn&iacute; sc&eacute;n&aacute;ře. A jejich rockov&eacute;mu cirkusu to svědč&iacute;</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 22:23:00 GMT</span>
+<p>Jsme nejlepší živá kapela na světě, zahájili newyorští Kiss sebevědomě koncert v O2 aréně. A i když na to samozřejmě nejsou žádná měřítka, podle nadšených reakcí fanoušků to tak v plné a nadšené hale značnou část koncertu působilo.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/dovolena-v-protektoratu-komentar-drf-/filmvideo.aspx?c=A150609_182847_filmvideo_ts#utm_source=rss">KOMENT&Aacute;Ř: Svět řeš&iacute; naši hru na protektor&aacute;t. My ji vlažně vypoušt&iacute;me</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 05:53:00 GMT</span>
+<p>Hallo, Guten Tag, jsem váš zahraniční kolega a rád bych se vás zeptal na český pořad Dovolená v protektorátu: Co mu říkáte a co se kolem něj děje? Takové telefonáty nyní zažívá snad každý český novinář, který má trochu co do činění s televizí.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/vinari-nova-rada-02j-/filmvideo.aspx?c=A150609_175855_filmvideo_spm#utm_source=rss">Herci přejdou z Moravy do Čech. Toč&iacute; se nov&aacute; řada seri&aacute;lu Vinaři</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 16:21:00 GMT</span>
+<p>První klapka pokračování osudů moravských Vinařů padla v severočeském kraji. V nové řadě seriálu televize Prima se do Čech přesunul nejen štáb a herci, ale i děj příběhu. Na obrazovce se pokračování Vinařů objeví na podzim.</p>
+</div>
+</div>
+<div id="Mobily" class="content-category">
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/televize-leto-chalupari-vinnetou-cetnici-fg1-/televize.aspx?c=A150608_181632_televize_vha#utm_source=rss">Mušket&yacute;ři, Chalup&aacute;ři, Vinnetou, Četn&iacute;ci. Televize přep&iacute;n&aacute; na l&eacute;to</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 04:57:00 GMT</span>
+<p>Nastává reprízové léto, pro televizi už začínají prázdniny. Na Nově se Ordinace, Ulice i Doktoři z Počátků odmlčí od druhé půle června a také ostatní stanice nasadí letní program. Jen Prima se blýskne premiérou britského seriálu natáčeného v Česku.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/video-cameron-a-terminator-d04-/filmvideo.aspx?c=A150608_170953_filmvideo_spm#utm_source=rss">VIDEO: Vzkř&iacute;šen&iacute;. James Cameron komentuje film Termin&aacute;tor Genisys</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 15:59:00 GMT</span>
+<p>V roce 1984 natočil James Cameron legendární sci-fi Terminátor. Nyní zakladatel ságy posuzuje ve videokomentáři nový, pátý díl, na němž se sám nepodílel, v roli prvního diváka: „Celou ságu znovu probouzí k životu.“ Snímek Terminátor Genisys vstoupí do našich kin 9. července.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/divadlo-komedie-granty-070-/divadlo.aspx?c=A150609_123534_divadlo_vha#utm_source=rss">Divadlo Komedie m&aacute; znovu nam&aacute;le, konec hroz&iacute; Fidlovačce i Činoher&aacute;ku</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 11:56:00 GMT</span>
+<p>Komedie se bude zavírat. Tato věta rezonovala divadelními kruhy už před čtyřmi lety, kdy konec ohlásil oceňovaný soubor Dušana D. Pařízka. Podobné zprávy nyní zní z pražské scény opět, také soubor Company.cz, který do Komedie nastoupil a učinil z ní Centrum východní dramatiky, se potýká s finanční nouzí.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/tri-nove-basnicke-sbirky-089-/literatura.aspx?c=A150610_141737_literatura_ob#utm_source=rss">KNIŽN&Iacute; TIPY: Krchovsk&yacute;, Plac&aacute;k a Imlauf se ohl&iacute;žej&iacute;</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 15:58:00 GMT</span>
+<p>Tři nově vydané básnické sbírky spojují dvě věci: jedná se o retrospektivní pohledy na tvorbu autorů v průběhu několika let, a všichni tři básníci jsou zároveň hudebníci. Krchovský a Imlauf vedou vlastní kapely Krch-off resp. Houpací koně, Placák býval členem Plastic People of the Universe.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/joseph-gordon-levitt-chuze-po-lane-d5w-/filmvideo.aspx?c=A150609_122934_filmvideo_spm#utm_source=rss">VIDEO: Joseph Gordon-Levitt chod&iacute; po laně mezi věžemi Dvojčat</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 12:44:00 GMT</span>
+<p>Film, který se žádným jiným nepodobá a okouzlí diváky od osmi do osmdesáti let. Tak se mluví o Chůzi po laně, v níž režisér Robert Zemeckis poslal Josepha Gordona-Levitta coby provazochodce do výšin mezi již neexistující věže Světového obchodního centra. Do kin film přijde 8. října.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/letni-shakespearovske-slavnosti-2015-dbd-/divadlo.aspx?c=A150610_095449_divadlo_ts#utm_source=rss">Tereza Voř&iacute;škov&aacute; se pro Julii rozhodla už pod balkonem ve Veroně</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 07:56:00 GMT</span>
+<p>Erotický sen, který přejde v noční můru. Těmito slovy uvedl chystanou premiéru Letních shakespearovských slavností Martin Kukučka. Spolu se svým souputníkem Lukášem Trpišovským totiž pro letošní ročník inscenuje Romea a Julii.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/jan-hus-v-komiksu-0eb-/literatura.aspx?c=A150610_101312_literatura_ob#utm_source=rss">RECENZE: Komu je vlastně určen&yacute; komiksov&yacute; Jan Hus?</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 09:39:00 GMT</span>
+<p>Ztvárnit život mistra Jana Husa formou komiksu je lákavý nápad, který, zvlášť v roce 600. výročí jeho upálení, visel ve vzduchu. Rukavici zvedla autorská dvojice Zdeněk Ležák a Michal Kocián.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://kultura.idnes.cz/marry-ellen-trainorova-zemeckis-doe-/filmvideo.aspx?c=A150609_094009_filmvideo_spm#utm_source=rss">Zemřela herečka čtyř d&iacute;lů Smrtonosn&eacute; zbraně a Honby za diamantem</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 07:50:00 GMT</span>
+<p>Mary Ellen Trainorová, která hrála ve čtyřech filmech svého exmanžela Roberta Zemeckise včetně titulů Forrest Gump či Smrt jí sluší, zemřela měsíc před svými pětašedesátinami. Proslavila ji také role policejní psychiatričky v sérii Smrtonosných zbraní.</p>
+</div>
+</div>
+<div id="none" class="content-category">
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/podivejte-se-na-rozbalovani-vyvojarskeho-kitu-vive-vr-video/sc-4-a-178634/default.aspx#utm_medium=selfpromo">Pod&iacute;vejte se na rozbalov&aacute;n&iacute; v&yacute;voj&aacute;řsk&eacute;ho kitu Vive VR (video)</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 15:32:00 GMT</span>
+<p> Valve se spojilo s HTC a vytváří vlastní podobu virtuální reality, která zahrnuje brýle, dvojici krabiček pro laserové snímání polohy a dva ovladače. Zatímco Oculus oznámil, že finální verze Riftu bude v prodeji začátkem roku 2016, Valve se zmiňuje o tom, že stihne konec tohoto roku. [ArticleBox ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/chcete-nejrychlejsi-mozny-internet-prestehujte-se-na-americky-venkov/sc-4-a-178608/default.aspx#utm_medium=selfpromo">Chcete nejrychlejš&iacute; možn&yacute; internet? Přestěhujte se na americk&yacute; venkov</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 08:23:00 GMT</span>
+<p> Chcete ten nejrychlejší domácí internet? Pak se budete muset přestěhovat třeba do Singapuru nebo na vermontský venkov . Tamní operátor VTel totiž s podporou dotačních programů zasíťoval malé devítitisícové městečko Springfield novou optikou a nabídne obyvatelům závratnou rychlost 10 Gb/s. A když ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/microsoft-prodava-pocitacovy-bezdratovy-adapter-pro-ovladace-xbox-one/sc-4-a-178626/default.aspx#utm_medium=selfpromo">Microsoft prod&aacute;v&aacute; poč&iacute;tačov&yacute; bezdr&aacute;tov&yacute; adapt&eacute;r pro ovladače Xbox One</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 11:46:00 GMT</span>
+<p> Pokud jste chtěli na počítači hrát pomocí bezdrátového ovladače jako na konzoli, asi nejlepší volbou byla počítačová verze ovladače pro Xbox 360. Herní konzole Xbox One ale přinesla vylepšenou verzi, která není v bezdrátové variantě dostupná pro počítače s WIndows. Microsoft tak po předchozím ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/posledni-pozustatky-google-talku-mizi-dale-uz-jen-hangouts/sc-4-a-178622/default.aspx#utm_medium=selfpromo">Posledn&iacute; pozůstatky Google Talku miz&iacute;, d&aacute;le už jen Hangouts</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 10:10:00 GMT</span>
+<p> V únoru Google oznámil ukončení své komunikační služby Google Talk, která byla nahrazena novou službou Hangouts. Přesto bylo možné Google Talk nadále používat, ale nyní pozorujeme, že poslední stopy po Google Talku mizí. Klient pro Google Talk se stal v praxi těžko použitelný záhy po oznámení ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/vysla-opera-30-vtesna-doplnky-do-postranniho-panelu/sc-4-a-178610/default.aspx#utm_medium=selfpromo">Vyšla Opera 30. Vtěsn&aacute; doplňky do postrann&iacute;ho panelu</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 08:55:00 GMT</span>
+<p> Opera oficiálně vydala třicátou verzi svého prohlížeče. K hlavním novinkám patří doplňky do postranního panelu, které mají v katalogu novou kategorii . Zatím se jedná převážně o plnotučné webové stránky, které se jednoduše načítají v okně postranního panelu. V této pozici může dobře vypadat a ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/emotes-textovi-smajlici-nejsou-jen---a--/sc-4-a-178599/default.aspx#utm_medium=selfpromo">Emot.es: Textov&iacute; smajl&iacute;c&iacute; nejsou jen :-) a :-(</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 12:14:00 GMT</span>
+<p> Ačkoliv světu instantních komunikátorů začíná při vyjadřování emocí pomalu vládnout hromada speciálních grafických emoji , základem jsou stále textové kombinace jako :-) a :-(. Běžný uživatel si vystačí s několika málo variantami, web emot.es ale nabízí docela úchvatnou sbírku čistě textových a ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/po-letech-priprav-vyvrcholilo-nejvetsi-roboticke-klani-historie/sc-3-a-178594/default.aspx#utm_medium=selfpromo">Po letech př&iacute;prav vyvrcholilo největš&iacute; robotick&eacute; kl&aacute;n&iacute; historie</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 22:00:00 GMT</span>
+<p>O víkendu skončila tříletá soutěž o nejlepšího robotického záchranáře DARPA Robotics Challenge. Vítězné vavříny a dva miliony dolarů míří do Tokia. Zvítězila ale celá technologie.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://connect.zive.cz/clanky/proc-intel-za-17-miliard-dolaru-kupuje-vyrobce-cipu-altera/sc-320-a-178603/default.aspx#utm_medium=selfpromo">Proč Intel za 17 miliard dolarů kupuje v&yacute;robce čipů Altera</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 13:28:00 GMT</span>
+<p>Altera je pro Intel jeho největší akvizicí v historii. Téměř 17 miliard dolarů má pro něj hodnotu firma, která vyvíjí FPGA čipy. Ty je možné si naprogramovat.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://connect.zive.cz/clanky/v-cesku-se-zacinaji-budovat-site-pro-internet-veci/sc-320-a-178611/default.aspx#utm_medium=selfpromo">V Česku se zač&iacute;naj&iacute; budovat s&iacute;tě pro internet věc&iacute;</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 09:13:00 GMT</span>
+<p>T-Mobile a České Radiokomunikace začínají stavět speciální sítě pro internet věcí, vyjdou na desítky milionů. Každá má jinou technologii.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/a-je-tu-porn-time-byla-to-jen-otazka-casu/sc-4-a-178605/default.aspx#utm_medium=selfpromo">A je tu Porn Time. Byla to jen ot&aacute;zka času</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 14:00:00 GMT</span>
+<p> Když se loni na pirátské scéně objevil Popcorn Time , způsobil velký rozruch. Princip byl jednoduchý. Nainstalujete aplikaci, kde se vám zobrazí nabídka filmů a vy si je prostě přehrajete. Pod kapotou byl umně zabudovaný bittorrentový klient napojený na databázi YTS (YIFY). Majitelé práv se ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/chrome-zastavi-flashovou-reklamu-chce-setrit-baterku-na-noteboocich/sc-4-a-178596/default.aspx#utm_medium=selfpromo">Chrome zastav&iacute; flashovou reklamu. Chce šetřit baterku na notebooc&iacute;ch</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 09:50:00 GMT</span>
+<p> Chrome chce ušetřit energii při surfování na noteboocích, přichází proto s netradiční funkcí . Největším žroutem energie jsou flashové animace a multimédia, Google tedy přestane automaticky přehrávat flashové objekty, které nejsou ve středu stránky, ale naopak při okraji a mají tak pro návštěvníka ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/4-mista-pro-nejlevnejsi-nakup-her/sc-3-a-178584/default.aspx#utm_medium=selfpromo">4 m&iacute;sta pro nejlevnějš&iacute; n&aacute;kup her</a>
+</h3>
+<span class="date">Sun, 7 Jun 2015 22:00:00 GMT</span>
+<p>Hry můžete nakupovat na Steamu a u mnoha oficiálních distributorů. Anebo můžete zamířit do netradičních eshopů, kde lze ušetřit pár korun, ale i převážnou část z běžných cen.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://connect.zive.cz/clanky/brzy-vas-nakrmi-senzory-cloud-data-a-roboti/sc-320-a-178598/default.aspx#utm_medium=selfpromo">Brzy v&aacute;s nakrm&iacute; senzory, cloud, data a roboti</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 22:00:00 GMT</span>
+<p>V Evropě máme dotace, v Asii mají senzory, cloud a roboty. Japonské firmy spouštějí revoluci v zemědělství a expandují s ní do světa.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/netflix-zamiri-do-spanelska-a-italie-cesko-stale-neni-na-seznamu/sc-4-a-178600/default.aspx#utm_medium=selfpromo">Netflix zam&iacute;ř&iacute; do Španělska a It&aacute;lie. Česko st&aacute;le nen&iacute; na seznamu</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 12:35:00 GMT</span>
+<p> Netflix se na podzim otevře třem dalším evropským zemím. Česká republika to ale prozatím nebude, populární internetová videopůjčovna totiž zamíří do Španělska , Portugalska a Itálie . Malý tuzemský trh s vysokou oblibou pirátského obsahu si bude muset ještě počkat. Situace se prozatím snaží využít ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/tyden-zive-special-z-tchaj-wanu/sc-3-a-178583/default.aspx#utm_medium=selfpromo">T&yacute;den Živě: Speci&aacute;l z Tchaj-wanu</a>
+</h3>
+<span class="date">Sat, 6 Jun 2015 22:00:00 GMT</span>
+<p>Dnešní Týden Živě bude poněkud netradiční, David totiž strávil týden na jihoasijském Computexu, a tak nám ukáže nejen zajímavosti z počítačového veletrhu.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/unikly-snimky-mozna-finalni-verze-riftu-s-ovladacem-pro-virtualni-realitu/sc-4-a-178633/default.aspx#utm_medium=selfpromo">Unikly sn&iacute;mky možn&aacute; fin&aacute;ln&iacute; verze Riftu s ovladačem pro virtu&aacute;ln&iacute; realitu</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 14:00:00 GMT</span>
+<p> Společnost Oculus VR chystá na 11. června speciální událost , na které bude nejspíše odhalená finální verze podoby první finální virtuální reality Rift (CV1). Tak trochu omylem se ale nedočkavému fanouškovi ( Reddit ) podařilo v kódu stránek najít soubory, které ukazují dosud neviděnou podobu ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/xfx-omylem-odhalilo-vlastni-podobu-radeonu-r9-390x/sc-4-a-178606/default.aspx#utm_medium=selfpromo">XFX omylem odhalilo vlastn&iacute; podobu Radeonu R9 390X</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 15:24:00 GMT</span>
+<p> AMD už oznámilo, že k oficiálnímu uvedení nových grafických karet řady Radeon Rx 3xx dojde 16. června, jak to ale vypadá, společnosti XFX unikla fotografie jednoho z modelů. [ArticleBox AMD uvede novou výkonnou grafiku s rychlou pamětí HBM až 16. června : 178549] Na uniklém snímku lze vidět ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/asus-gr8-maly-herni-pocitac-s-dospelou-grafikou/sc-3-a-178544/default.aspx#utm_medium=selfpromo">Asus GR8: Mal&yacute; hern&iacute; poč&iacute;tač s dospělou grafikou</a>
+</h3>
+<span class="date">Sun, 7 Jun 2015 22:00:00 GMT</span>
+<p>Asus GR8 na první pohled vypadá jako designové kancelářské PC. Asus ale do tohoto drobka vtěsnal desktopovou grafiku GTX 750 Ti a vyrobil tak zajímavé herní PC.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/dnes-zacina-wwdc-co-muzeme-od-applu-cekat/sc-3-a-178589/default.aspx#utm_medium=selfpromo">Dnes zač&iacute;n&aacute; WWDC, co můžeme od Applu čekat?</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 06:14:00 GMT</span>
+<p>Ačkoliv se nedočkáme hardwarových novinek, i ty softwarové budou zajímavé. Přijdou tři nové operačních systémy a Apple konečně rozjede byznys se streamovanou hudbou.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/visa-ceska-republika-je-pripravena-na-apple-pay/sc-4-a-178619/default.aspx#utm_medium=selfpromo">Visa: Česk&aacute; republika je připraven&aacute; na Apple Pay</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 09:47:00 GMT</span>
+<p> Krátce poté, co Google na I/O oznámil svůj platební systém Android Pay (Wallet), karetní společnosti VISA a Mastercard se nechaly slyšet, že chtějí systém rozšířit i do Evropy. Konkurenční platební systém od Applu má ale roční náskok a VISA Europe nyní oznámila, že jej v červenci spustí v ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/7-pocitacu-na-stul-v-krabickach-i-monitorech-redaktori-radi/sc-3-a-178581/default.aspx#utm_medium=selfpromo">7 poč&iacute;tačů na stůl, v krabičk&aacute;ch i monitorech [redaktoři rad&iacute;]</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 22:00:00 GMT</span>
+<p>Zvažujete výměnu domácího počítače, nechcete ale velkou skříň a ani notebook? Podívejte se jaké jsou varianty a nechejte se inspirovat.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/plextor-chysta-rychlou-ssd-kartu-m7e-pro-pci-express/sc-4-a-178604/default.aspx#utm_medium=selfpromo">Plextor chyst&aacute; rychlou SSD kartu M7e pro PCI Express</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 13:33:00 GMT</span>
+<p> Ve třetím čtvrtletí tohoto roku by měl Plextor uvést na trh nové SSD do slotu PCI Express, které nabídne vysoký výkon a levné MLC čipy. [ArticleBox Toshiba začala hromadně vyrábět 15nm čipy NAND flash : 173486] Plextor M7e využívá čtyři linky PCI Express a nabídne rychlost čtení až 1,4 GB/s a ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/apple-zahodte-android-do-kose-v-nasich-obchodech/sc-4-a-178623/default.aspx#utm_medium=selfpromo">Apple: Zahoďte Android do koše v našich obchodech</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 10:17:00 GMT</span>
+<p> Americká média v souvislosti s novinkami představenými na Apple WWDC píší, že je Android nový Windows – platforma, kterou nemůže žádný vývojář ignorovat, i když by ji třeba neměl zrovna v lásce. Apple iTunes sice na Android nikdy nezamířil, jeho nástupce Apple Music to ale v plánu má. Aplikace pro ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/klavesnice-topre-ma-analogove-klavesy-snimaji-tlak-stisknuti/sc-4-a-178602/default.aspx#utm_medium=selfpromo">Kl&aacute;vesnice Topre m&aacute; analogov&eacute; kl&aacute;vesy, sn&iacute;maj&iacute; tlak stisknut&iacute;</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 13:11:00 GMT</span>
+<p> Na Computexu se objevila například klávesnice od Synaptics, která má v mezerníku integrovaný multitouch senzor . Společnost Topre ale ukázala i klávesnici , která má „analogové“ klávesy. [ArticleBox Synaptics SmartBar: multitouch povrch integrovaný v mezerníku : 178563] „Kapacitní“ klávesnice od ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/nemazte-v-usa-nic-z-pocitace-fbi-vas-muze-poslat-do-kriminalu/sc-4-a-178595/default.aspx#utm_medium=selfpromo">Nemažte v USA nic z poč&iacute;tače, FBI v&aacute;s může poslat do krimin&aacute;lu</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 09:29:00 GMT</span>
+<p> Když ve Spojených státech vymažete historii svého webového prohlížeče, můžete skončit ve vězení. Stačí, aby vás zrovna vyšetřovala třeba FBI, která může podobný krok považovat na základě sekce 802 legislativy Sarbanes-Oxley Act z roku 2002 za maření vyšetřování. Nejedná se přitom jen o teorii, ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/os-x-el-capitan-prehled-hlavnich-novinek/sc-3-a-178609/default.aspx#utm_medium=selfpromo">OS X El Capitan: přehled hlavn&iacute;ch novinek</a>
+</h3>
+<span class="date">Tue, 9 Jun 2015 11:00:00 GMT</span>
+<p>Apple představil novou verzi operačního systému OS X pro Macy a MacBooky. OS X El Capitan se soustředí na zlepšení uživatelského zážitku a rychlosti.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/instagram-ma-novy-web/sc-4-a-178624/default.aspx#utm_medium=selfpromo">Instagram m&aacute; nov&yacute; web</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 10:56:00 GMT</span>
+<p> Instagram je především mobilní aplikace a služba dlouhé roky ostatně neměla ani plnohodnotnou webovou podobu, v poslední době se to ale mění a tým se soustředí i na desktopové prohlížeče. Webový Instagram se tedy v těchto dnech dočkal nového designu a podoby profilů, který víceméně kopíruje ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/apple-na-wwdc-predstavil-hromadu-softwarovych-novinek/sc-3-a-178593/default.aspx#utm_medium=selfpromo">Apple na WWDC představil hromadu softwarov&yacute;ch novinek</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 15:33:00 GMT</span>
+<p>Začíná WWDC. Výroční vývojářská konference Applu, která je primárně určená pro vývojáře, ale tradičně přináší zajímavé novinky pro všechny. Sledujte s námi živě!</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/spotify-se-chlubi-ma-20-milionu-predplatitelu/sc-4-a-178632/default.aspx#utm_medium=selfpromo">Spotify se chlub&iacute;. M&aacute; 20 milionů předplatitelů</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 13:02:00 GMT</span>
+<p> Hudební služby postupně reagují na oznámení Apple Music. Rdio v pondělí na svém Twitteru parafrázovalo někdejší reklamu Applu namířenou proti IBM a lakonicky přivítalo jablečnou korporaci slovy: „Welcome Apple, Seriously.“ [html: ] Nyní se nepřímo přidalo i obří Spotify. Namísto vtípků zveřejnilo ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/windows-a-windows-phone-prestanou-synchronizovat-facebook/sc-4-a-178625/default.aspx#utm_medium=selfpromo">Windows a Windows Phone přestanou synchronizovat Facebook</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 11:45:00 GMT</span>
+<p> Windows a Windows Phone přestanou nativně podporovat synchronizaci s Facebookem. Jedná se především o adresáře kontaktů, které přestanou načítat dodatečné informace o kontaktech, fotografie a další údaje ze sociální sítě. Stejně tak kalendářová služba přestane synchronizovat přihlášené události z ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://connect.zive.cz/bleskovky/ministerstvo-zemedelstvi-zadalo-dve-velke-it-zakazky-hp-a-o2/sc-321-a-178597/default.aspx#utm_medium=selfpromo">Ministerstvo zemědělstv&iacute; zadalo dvě velk&eacute; IT zak&aacute;zky HP a O2</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 09:53:00 GMT</span>
+<p> Ministerstvo zemědělství po roce a čtvrt uzavřelo dva velké tendry týkající se dříve kritizované oblasti IT. První získala společnost Hewlett-Packard za 43,2 milionu korun, druhou pak O2 CZ s nabídkou 30 milionů korun. V obou případech je podle zadávací dokumentace vítězná cena třetinová ve ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/jedno-z-nejslavnejsich-auditorii-se-nyni-jmenuje-microsoft-theater/sc-4-a-178618/default.aspx#utm_medium=selfpromo">Jedno z nejslavnějš&iacute;ch auditori&iacute; se nyn&iacute; jmenuje Microsoft Theater</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 09:25:00 GMT</span>
+<p> Srdce losangeleského výstaviště v sousedství obchodní čtvrti s mrakodrapy změnilo jméno. Zdejší slavné auditorium a náměstí, které se dlouhé roky jmenovalo Nokia Theater a Nokia Plaza se nyní přejmenovalo na Microsoft Theater a Microsoft Plaza. Práva na jméno totiž až do roku 2018 patřila finské ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/clanky/hostesky-na-computexu-aneb-nejpritazlivejsi-exponaty/sc-3-a-178575/default.aspx#utm_medium=selfpromo">Hostesky na Computexu, aneb nejpřitažlivějš&iacute; expon&aacute;ty</a>
+</h3>
+<span class="date">Fri, 5 Jun 2015 22:00:00 GMT</span>
+<p>Ke Computexu patří i pěkné holky. Ukazují tu paměti, grafické karty, chladiče... a určitě ani neví, co drží v ruce. Dokážou však ke stánku přilákat hromadu kolemjdoucích ajťáků. </p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/hgst-zacina-dodavat-prvni-10tb-pevne-disky-pro-podniky-s-programatory/sc-4-a-178629/default.aspx#utm_medium=selfpromo">HGST zač&iacute;n&aacute; dod&aacute;vat prvn&iacute; 10TB pevn&eacute; disky pro podniky s program&aacute;tory</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 12:30:00 GMT</span>
+<p> Společnost HGST, která už dnes patří pod Western Digital, v předstihu informovala o novém pevném disku s kapacitou 10 TB. Konstrukce disku využívá hélium (HelioSeal) a technologii SMR ( Shingled magnetic recording ). Má to ale jeden háček. [ArticleBox Hitachi už brzy začne prodávat 10TB pevné ...</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://www.zive.cz/bleskovky/chromebook-flip-chrome-os-poprve-na-zarizeni-ktere-muze-byt-i-tabletem/sc-4-a-178591/default.aspx#utm_medium=selfpromo">Chromebook Flip: Chrome OS poprv&eacute; na zař&iacute;zen&iacute;, kter&eacute; může b&yacute;t i tabletem</a>
+</h3>
+<span class="date">Mon, 8 Jun 2015 07:17:00 GMT</span>
+<p> Na Computexu jsme si mohli poprvé naživo prohlédnou Asus Chromebook Flip, tedy první počítač typu 2 v 1 s operačním systémem Chrome OS. Doposud byly Chromebooky čistě notebookové stroje, tentokrát je ale možné klávesnici zcela přetočit a zařízení tak přepnout do módu tabletu. Poprvé je tak v ...</p>
+</div>
+</div>
+<div id="Poč&iacute;tače" class="content-category">
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/hardware/notebooky-pda/35281-test-luxusnich-ebook-ctecek-v-cele-s-novym-pocketbook-sense">Čl&aacute;nek: Test luxusn&iacute;ch ebook čteček v čele s nov&yacute;m PocketBook Sense</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 03:00:00 GMT</span>
+<p>Pokud patříte mezi vášnivé čtenáře a sháníte kvalitní čtečku elektronických knih, která je použitelná i v noci, je dnešní recenze určena právě vám. Představíme si totiž ty nejlepší čtečky od značek PocketBook, Energy Sistem a Kobo dostupné na našem trhu. Současně se seznámíme s horkou novinkou v podobě čtečky PocketBook</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35289-specifikace-graficke-karty-amd-radeon-fury-x-potvrzeny-mezi-vybavou-se-objevi-i-4096-stream-procesoru">Novinka: Specifikace grafick&eacute; karty AMD Radeon Fury X potvrzeny. Mezi v&yacute;bavou se objev&iacute; i 4096 stream procesorů</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 17:14:27 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/AMDRadeon(1).png" width="56" height="56" alt="" />Na webu se objevily potvrzené specifikace chystané vlajkové lodi společnosti AMD, podle nichž bude grafická karta AMD Radeon Fury X skutečně tím nejvýkonnějším, co bude pro spotřebitele na poli jednočipových grafických karet k dostání. Zásadním parametrem výkonu by totiž mělo být 4096 GCN stream procesorů.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/multimedia/hry-a-zabava/35241-velky-vyber-her-na-prazdniny-to-nejlepsi-z-poslednich-mesicu">Čl&aacute;nek: Velk&yacute; v&yacute;běr her na pr&aacute;zdniny: to nejlepš&iacute; z posledn&iacute;ch měs&iacute;ců </a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 03:00:00 GMT</span>
+<p>Letní prázdniny se blíží, takže je na čase zrekapitulovat, jaké nejlepší hry vyšly v posledních měsících. Co kdybyste mezi typickými letními aktivitami, jako je koupání, slunění či grilování, našli pár volných chvilek a chtěli pořádně zapařit, že? Krom provařených titulů se podíváme i na další skvělé hry, které neprovázela gigantická kampaň.</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35227-nvidia-pascal-na-16-nm-je-hotov-za-pul-roku-mozna-na-trhu">Novinka: NVIDIA Pascal na 16+nm je hotov, za půl roku možn&aacute; na trhu</a>
+</h3>
+<span class="date">Sun, 07 Jun 2015 09:26:11 GMT</span>
+<p><p><img alt="" width="51" height="49" src="http://pctuning.tyden.cz/images/stories/nvidia-geforce-logo.jpg" />Nástupce Maxwellu je hotov, v těchto dnech proběhl v TSMC &quot;tape-out&quot; a Pascal vyjde dle plánu</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35219-spolecnost-g-skill-odhalila-novou-generaci-pcie-ssd-phoenix-blade-s-podporou-rozhrani-pcie-3-0-x4-computex-2015">Novinka: Společnost G.Skill odhalila novou generaci PCIe SSD Phoenix Blade s podporou rozhran&iacute; PCIe 3.0 x4 [Computex 2015]</a>
+</h3>
+<span class="date">Fri, 05 Jun 2015 17:21:55 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Gskill.png" alt="" />Před nedávnem jsme Vám <a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35183-firma-g-skill-expanduje-na-trh-s-periferiemi-pro-hrace-vydat-hodla-vlastni-klavesnici-mys-i-headset">přinesli zprávu</a> o tom, že společnost G.Skill zabrousila na trh s herními periferiemi. Známá je však především svými produkty v oblasti paměťových zařízení, mezi něž patří hlavně operační paměti. Na svém kontě však tato firma má také PCIe SSD Phoenix Blade, které</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35223-vubec-prvni-512-gb-microsd-karta-je-na-svete-cena-asi-odradi-pripadne-zajemce">Novinka: Vůbec prvn&iacute; 512 GB microSD karta je na světě, cena asi odrad&iacute; př&iacute;padn&eacute; z&aacute;jemce</a>
+</h3>
+<span class="date">Sat, 06 Jun 2015 21:56:50 GMT</span>
+<p><p class="MsoNormal"><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/microdia-logo.png" width="56" height="56" alt="" />Na právě probíhajícím veletrhu Computex se objevila další velmi zajímavá technologická novinka, která pochází od společnosti Microdia. Tato novinka se postará o ukládání dat, jedná se totiž o paměťovou kartu s dosud nevídanou kapacitou 512 GB.&nbsp;<o:p></o:p></p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35277-nastupce-prodejne-neuspesneho-htc-one-m9-bude-mit-novy-design">Novinka:  N&aacute;stupce prodejně neuspěšn&eacute;ho HTC One M9 bude m&iacute;t nov&yacute; design</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 20:12:48 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/kveten/htc-200x200.png" width="56" height="56" alt="" />Generální ředitelka HTC Cher Wangová prozradila, že firma příští rok uvede na trh špičkový mobilní telefon se zcela novým designem a operačním systémem Android M. Půjde o nástupce současného One M9, <a href="http://phandroid.com/2015/06/05/htc-one-m10">upozornil</a> na to portál Phandroid.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35279-takhle-by-mela-vypadat-referencni-graficka-karta-amd-radeon-r9-370">Novinka: Takhle by měla vypadat referenčn&iacute; grafick&aacute; karta AMD Radeon R9 370</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 21:06:26 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/AMDRadeon(1).png" alt="" />Na twitterovém účtu značky Alienware se dnes objevil snímek odhalující referenční provedení připravované grafické karty Radeon R9 370 od společnosti AMD.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35249-chytry-naramek-huawei-talkband-b2-vstoupil-do-prodeje-cena-nepotesi">Novinka: Chytr&yacute; n&aacute;ramek Huawei TalkBand B2 vstoupil do prodeje. Cena nepotěš&iacute;</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 17:15:24 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/kveten/talkband.png" width="56" height="56" alt="" />Společnost Huawei zahájila na českém trhu prodej chytrého náramku TalkBand B2, který díky vestavěnému Bluetooth sluchátku poslouží i k telefonování. Novinka je k dostání v černém a stříbrném barevném provedení s pryžovým řemínkem za cenu 4 590 Kč nebo v prémiovém zlatém barevném provedení s</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35263-lg-predstavilo-27-monitor-s-uhd-rozlisenim-ips-panelem-a-podporou-amd-freesync">Novinka: LG představilo 27</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 08:44:49 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/LG.png" alt="LG" />Společnost LG hodlá na trh přinést zajímavou novinku, která by měla zaujmout zejména hráče. Jedná se o 27&quot; monitor 27MU67, který v sobě spojuje několik atraktivních prvků IPS displej s dobrými pozorovacími úhly, rozlišení 4K Ultra HD a také podporu technologie AMD FreeSync.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/multimedia/hry-a-zabava/35269-mikropocitace-pred-40-lety-kdyz-to-altair-konkurenci-usnadnil">Čl&aacute;nek: Mikropoč&iacute;tače před 40 l&eacute;ty: Když to Altair konkurenci usnadnil</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 10:00:00 GMT</span>
+<p>Je to už čtyřicet let, kdy se zrodil první masově vyráběný a užívaný mikropočítač, Altair 8800. Znamenal počátek nové doby, nového průmyslu. Altair byl sice první, ale ne jediný. Jako houby po dešti se zrodily i další mikropočítače a firmy jako IMSAI či SWTPC byla tehdejším počítačovým nadšencům stejně známé,</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpr">Novinka: V ČR se začal prod&aacute;vat levn&yacute; LTE smartphone Kazam Trooper 440L</a>
+</h3>
+<span class="date">Sun, 07 Jun 2015 10:15:14 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/%C4%8Derven2015/kazam.jpg" width="56" height="56" alt="" />Britský výrobce chytrých telefonů Kazam vstupuje s dostupným LTE modelem Trooper 440L na pulty prodejen operátora T-Mobile v České republice.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35271-tvurci-world-of-tanks-ohlasili-oziveni-znacky-master-of-orion">Novinka: Tvůrci World of Tanks ohl&aacute;sili oživen&iacute; značky Master of Orion</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 16:28:00 GMT</span>
+<p><p class="MsoNormal"><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/wargaming-logo.jpg" width="56" height="56" alt="" />Tvůrci her World of Tanks, World of Warplanes a World of Warships oznámili, že pracují na nové hře. Jmenuje se World of Warmaster of Orion. Co si pod tím představit? Reboot hry Master of Orion.<o:p></o:p></p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/multimedia/hry-a-zabava/35259-soutez-s-intelem-o-balik-her-a-bonus-pro-wot-vysledky-1-kola">Čl&aacute;nek: Soutěž s Intelem o bal&iacute;k her a bonus pro WOT: v&yacute;sledky 1. kola</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 03:00:00 GMT</span>
+<p>U Intelu právě probíhá akce, v níž ke svým procesorům Core i5 a Core i7 přidává zdarma herní balíčky v hodnotě téměř 5000 korun. Jejich součástí jsou nejen plné hry, ale i prémiový obsah pro World of Tanks. První kolo soutěže je za námi a my se můžeme podívat, jaké</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35243-amazon-najima-vyvojare-pro-svoji-prvni-pocitacovou-hru">Novinka: Amazon naj&iacute;m&aacute; v&yacute;voj&aacute;ře pro svoji prvn&iacute; poč&iacute;tačovou hru</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 08:02:20 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Amazon.png" alt="" />V dubnu jsme Vám přinesli zprávu o tom, že společnost Amazon koupila od herního studia Crytek kompletní licenci na herní engine CryEngine, což napovídalo tomu, že Amazon hodlá přijít se svými herními tituly. Nyní se tato dříve nepodložená spekulace skutečně potvrzuje.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35285-samsung-predstavil-nove-oled-displeje-muzou-poslouzit-jako-zrcadlo-nebo-informacni-panel">Novinka: Samsung představil nov&eacute; OLED displeje, můžou posloužit jako zrcadlo nebo informačn&iacute; panel</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 13:54:20 GMT</span>
+<p><p class="MsoNormal"><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/samsung-logo.jpg" width="56" height="43" alt="" />Společnost Samsung představila dva nové OLED displeje. První z&nbsp;nich je průhledný a druhý zrcadlový.<o:p></o:p></p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35251-firma-colorful-se-pochlubila-spickovou-grafickou-kartou-gtx-980-ti-v-provedeni-igame-ymir-top-computex-2015">Novinka: Firma Colorful se pochlubila špičkovou grafickou kartou GTX 980 Ti v proveden&iacute; iGame Ymir TOP [Computex 2015]</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 17:58:04 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Colorful.png" alt="" />Jeden z největších světových <a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35021-firma-colorful-ma-naslapnuto-k-tomu-stat-se-druhym-nejvetsim-prodejcem-grafickych-karet-v-roce-2015">výrobců grafických karet</a>, čínská společnost Colorful odhalila v rámci veletrhu Computex 2015 nejeden produkt. Mezi těmi nejzajímavější bezesporu patřila grafická karta GeForce GTX 980 Ti v provedení iGame Ymir TOP.&nbsp;</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35255-uzasne-video-ukazuje-gta-v-ve-skutecnem-zivote">Novinka: &Uacute;žasn&eacute; video ukazuje GTA V ve skutečn&eacute;m životě</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 22:10:32 GMT</span>
+<p><p class="MsoNormal"><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/gta-v-logo.png" width="56" height="56" alt="" />Na YouTubeovém kanálu Corridor Digital se objevilo zdaleka nejlepší fanouškovské video ke hře GTA V. Toto video ukazuje GTA V&nbsp;v&nbsp;reálném životě. A je opravdu velmi reálné!<o:p></o:p></p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35247-htc-ma-problemy-o-spickove-one-m9-neni-zajem">Novinka: HTC m&aacute; probl&eacute;my, o špičkov&eacute; One M9 nen&iacute; z&aacute;jem</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 17:15:01 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/kveten/htc-200x200.png" width="56" height="56" alt="" />Prodeje chytrých telefonů s&nbsp;logem HTC jsou dlouhodobě neuspokojivé a to se odrazilo i na ceně společnosti. Hodnota jedné akcie klesla během středečního obchodování na historické minimum 3,01 dolaru. Podle serveru <a href="http://www.phonearena.com/news/Things-arent-looking-good-for-HTC--stocks-continue-to-plummet-reaching-record-low_id70073">phonearena.com</a> důvodem poklesu ceny bylo, že v ten den se prodalo více jak 25</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35291-firma-xfx-zverejnila-jako-prvni-fotografie-sveho-nereferencniho-provedeni-grafiky-radeon-r9-390x">Novinka: Firma XFX zveřejnila jako prvn&iacute; fotografie sv&eacute;ho nereferenčn&iacute;ho proveden&iacute; grafiky Radeon R9 390X</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 20:08:59 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/XFX.png" alt="XFX" />Ačkoliv do představení nových grafických karet od AMD zbývá ještě téměř týden, firma XFX již odhalila, jak bude vypadat její nereferenční provedení grafické karty Radeon R9 390X.&nbsp;</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35253-nova-politika-reklamaci-na-steamu-poskozuje-nezavisle-vyvojare">Novinka: Nov&aacute; politika reklamac&iacute; na Steamu poškozuje nez&aacute;visl&eacute; v&yacute;voj&aacute;ře</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 20:30:15 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Steam.png" alt="Steam" />Před několika dny jsme Vás <a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35185-steam-zavadi-system-reklamaci-zakoupenych-her-bez-udani-duvodu">informovali </a>o nové funkci digitální herního obchodu Steam, která umožňuje vyreklamovat hru, pokud Vás nezaujme, funguje špatně nebo Vám na ni nestačí hardware. Tato funkce jistě řadu hráčů potěšila a svým způsobem může nahrazovat stále vzácnější dema. Nehraje však absolutně do</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35235-gameworks-caruje-batman-arkham-knight-vypada-s-nadstavbovymi-efekty-proste-nadherne">Novinka: GameWorks čaruje: Batman: Arkham Knight vypad&aacute; s nadstavbov&yacute;mi efekty prostě n&aacute;dherně</a>
+</h3>
+<span class="date">Sun, 07 Jun 2015 10:11:35 GMT</span>
+<p><p class="MsoNormal"><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/nvidia-logo.jpg" width="56" height="56" alt="" />Výrobce grafických karet společnost Nvidia uveřejnila nové video, které zdůrazňuje několik speciálních vizuálních efektů ve hře Batman: Arkham Knight. Tyto efekty si užijete pouze pokud vlastníte kartu od Nvidie s podporou GameWorks.<o:p></o:p></p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35273-zaklinac-3-je-velmi-popularni-behem-dvou-tydnu-se-ho-prodalo-pres-4-miliony-kopii">Novinka: Zakl&iacute;nač 3 je velmi popul&aacute;rn&iacute;, během dvou t&yacute;dnu se ho prodalo přes 4 miliony kopi&iacute;</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 16:28:25 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/jirikova/the-witcher-3-ikonka.jpg" width="56" height="56" alt="" />Společnost CD Projekt Red oznámila, že vysoce hodnoceného RPG Zaklínač 3: Divoký Hon se už prodalo přes 4 miliony kopií. Hra vyšla 19. května pro počítače a konzole nové generace.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35231-do-prodeje-miri-vyborne-vybaveny-phablet-xiaomi-mi-note-pro">Novinka: Do prodeje m&iacute;ř&iacute; v&yacute;borně vybaven&yacute; phablet Xiaomi Mi Note Pro </a>
+</h3>
+<span class="date">Sun, 07 Jun 2015 10:09:20 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/%C4%8Derven2015/Xiaomi-Note-4G-LTE-Smartphone-Dual-Camera-GPS-Bluetooth-5-7-Inch-2560-x-1440pixels-IPS-Retina-Screen-4GB-RAM-64GB-ROM_2-200x200.jpg" width="56" height="56" alt="" />V e-shopu XiaomiForSale.com zítra odstartuje prodej špičkového smartphonu Xiaomi Mi Note Pro, který umí pracovat se dvěma SIM kartami a chlubí se 2K displejem a 4 GB RAM.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35245-noctua-predstavila-tri-nove-prototypy-procesorovych-chladicu-computex-2015">Novinka: Noctua představila tři nov&eacute; prototypy procesorov&yacute;ch chladičů [Computex 2015]</a>
+</h3>
+<span class="date">Mon, 08 Jun 2015 09:41:18 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Noctua.png" alt="Noctua" />Společnost Noctua představila na veletrhu Computex 2015 tři nové prototypy procesorových chladičů, z nichž je jeden typu L a dva typu věž s asymetrickou konstrukcí.&nbsp;</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35239-prodejci-elektronika-vyrazne-podrazi-uz-o-prazdninach">Novinka: Prodejci: Elektronika v&yacute;razně podraž&iacute; už o pr&aacute;zdnin&aacute;ch</a>
+</h3>
+<span class="date">Sun, 07 Jun 2015 10:19:34 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/%C4%8Derven2015/opravit_pocitac.png" width="56" height="56" alt="" />Ceny elektroniky u tuzemských prodejců už začínají růst kvůli výraznému zdražení dolaru. K citelnému růstu cen by mělo dojít v průběhu letošních prázdnin, kdy budou vyprodány levnější zásoby. Mobilní telefony a počítače tak už brzy podraží o 20 až 30 procent, u televizí to bude</p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35287-nove-detaily-o-motorole-moto-x-2015-mela-by-nabidnout-ctecku-otisku-a-vykonny-snapdragon-810">Novinka: Nov&eacute; detaily o Motorole Moto X (2015). Měla by nab&iacute;dnout čtečku otisků a v&yacute;konn&yacute; Snapdragon 810</a>
+</h3>
+<span class="date">Wed, 10 Jun 2015 15:51:32 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/%C4%8Derven2015/droid_motorola.jpg" width="56" height="56" alt="" />Novinka bude mít výkonný procesor a displej s&nbsp;ultrajemným rozlišením. Další předností má být možnost velké individualizace vzhledu a kvalitní fotoaparát. Po vzoru největší konkurence Moto X (2015)&nbsp;nabídne také snímač otisků prstů.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35261-galaxy-predvedlo-svoji-grafiku-geforce-gtx-980-ti-hof-v-bilem-kabatku-a-s-vodnim-chlazenim">Novinka: Galaxy předvedlo svoji grafiku GeForce GTX 980 Ti HOF v b&iacute;l&eacute;m kab&aacute;tku a s vodn&iacute;m chlazen&iacute;m</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 08:44:31 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/NOVA_LOGA/Galaxy_hof.png" alt="" />Čínská firma Galaxy hodlá do své nabídky přidat novou grafickou katu série HOF (Hall of Fame). Bude se samozřejmě jednat o nový model GeForce GTX 980 Ti, který firma Galaxy převlékla do bílého kabátku a vybavila ho blokem vodního chlazení edice LCE (Liquid Cooled Edition).&nbsp;</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35275-sony-xperia-m4-aqua-nabizi-uzivateli-pouze-1-26-gb-pameti">Novinka: Sony Xperia M4 Aqua nab&iacute;z&iacute; uživateli pouze 1,26 GB paměti</a>
+</h3>
+<span class="date">Tue, 09 Jun 2015 20:04:22 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/koci/kveten/aqua.jpg" width="56" height="56" alt="" />Na internetu kolují stížnosti majitelů Sony Xperie M4 Aqua. Přestože je smartphone dle výrobce vybaven 8 GB paměti, uživateli po prvním zapnutí přístroje k dispozici zůstává jen 1,26 GB, tedy pouhých 15,75 z inzerovaného prostoru.</p></p>
+</div>
+<div class="item">
+<h3>
+<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35217-thermaltake-kopiruje-produkty-jinych-vyrobcu-upozornuje-na-to-firmy-caselabs">Novinka: Thermaltake kop&iacute;ruje produkty jin&yacute;ch v&yacute;robců, upozorňuje na to firmy CaseLabs</a>
+</h3>
+<span class="date">Fri, 05 Jun 2015 16:22:26 GMT</span>
+<p><p><img src="http://pctuning.tyden.cz/images/stories/Novinkari/ondrej_stepanek/201506/thermaltake_Vs_caslabs/tt_Vs_caselabs.png" alt="" />Mezi firmou CaseLabs a Thermaltake se rozhořel spor po tom, co firma Thermaltake představila na letošním veletrhu Computex nové skříně, které jsou nápadně podobné produktům zmíněné společnosti CaseLabs. Podezření z kopírování designu však nepadá na hlavu firmy Thermaltake poprvé, vzpomeňme třeba nedávno představenou&nbsp;<a href="http://pctuning.tyden.cz/component/content/article/1-aktualni-zpravy/35007-thermaltake-predstavil-novou-odhlucnenou-midi-tower-pc-skrin-suppressor-f51">skříň Suppressor F51</a>, která</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html><script>
+            $(document).ready(function() {
+                $(".category-href").click(function() {
+                    //$(".category-href").removeClass("active");
+                    //$(this).addClass("active");
+                    $(".arrows").hide();
+                    $(".arrows", $(this)).show();
+                    var category = $(this).attr("data-category");
+                    $(".content-category").hide();
+                    $("#" + category).show();
+                })
+            
+                $(".category-href").first().click();
+            });
+        </script>
