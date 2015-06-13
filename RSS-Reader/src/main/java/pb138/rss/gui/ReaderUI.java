@@ -149,7 +149,7 @@ public class ReaderUI extends javax.swing.JFrame {
             }
         });
         
-        exportButton.setText("Export do HTML");
+        exportButton.setText("Export to HTML");
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportButtonActionPerformed(evt);
