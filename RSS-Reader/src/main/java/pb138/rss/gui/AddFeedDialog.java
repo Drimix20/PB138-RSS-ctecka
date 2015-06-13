@@ -9,7 +9,6 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import pb138.rss.feed.Container;
-import pb138.rss.reader.downloader.RssFeedDownloader;
 import pb138.rss.reader.downloader.RssFeedReader;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
 
@@ -22,7 +21,6 @@ public class AddFeedDialog extends javax.swing.JDialog {
 
     private List<RssFeedReaderTask> feedReaderTask;
     private Container container;
-    private RssFeedDownloader downloader;
 
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -58,10 +56,6 @@ public class AddFeedDialog extends javax.swing.JDialog {
 
     public void setRssFeedContainer(Container container) {
         this.container = container;
-    }
-
-    public void setDownloader(RssFeedDownloader downloader) {
-        this.downloader = downloader;
     }
 
     /**
