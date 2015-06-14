@@ -286,7 +286,9 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void selectCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        SelectCategoryDialog dialog = new SelectCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,9 +308,7 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {
-        SelectCategoryDialog dialog = new SelectCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        // TODO add your handling code here:
     }
 
     private void createCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
