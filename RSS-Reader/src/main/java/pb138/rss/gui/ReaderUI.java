@@ -60,7 +60,7 @@ public class ReaderUI extends javax.swing.JFrame {
         downloader.schedule(tasks);
         
         try {
-            File input = new File("src/main/java/category/xml/categories.xml");
+            File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
             CategoriesLoader cLoader = new CategoriesLoader(input);
             categories = cLoader.loadCategories();
         } catch (Exception e) {
@@ -428,6 +428,15 @@ public class ReaderUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
+        
+        try {
+            File output = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
+            CategoriesSaver saver = new CategoriesSaver(output);
+            saver.saveCategories(cman.getAllCategories());
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
+        
         System.exit(0);
     }
 
