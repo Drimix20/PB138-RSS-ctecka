@@ -94,6 +94,10 @@ public class SearchDialog extends javax.swing.JDialog {
         this.container = container;
     }
     
+    public RssFeedContainer getRssFeedContainer() {
+        return container;
+    }
+    
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
      */
@@ -248,7 +252,7 @@ public class SearchDialog extends javax.swing.JDialog {
     }                                              
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        sman.runSearchForContainer(container, qman.getAllQueries(), allCheckBox.isSelected());
+        container = sman.runSearchForContainer(container, qman.getAllQueries(), allCheckBox.isSelected());
     }                                            
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
