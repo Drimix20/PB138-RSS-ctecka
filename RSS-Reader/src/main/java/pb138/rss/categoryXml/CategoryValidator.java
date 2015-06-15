@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package category.xml;
+package pb138.rss.categoryXml;
 
 import java.io.File;
 import java.io.IOException;
