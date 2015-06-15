@@ -16,6 +16,7 @@ public class RssFeed {
     private final String language;
     private final String copyright;
     private final String pubDate;
+    private Category category  = new Category("none");
 
     private RssFeedImage image = new RssFeedImage();
     private Set<RssFeedItem> items;
@@ -84,7 +85,6 @@ public class RssFeed {
                 + pubDate + ", title=" + title + ", items=" + items.size() + "]";
     }
     
-    private Category category;
     
     public void setCategory(Category category) {
         this.category = category;

@@ -21,6 +21,8 @@ import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
+import pb138.rss.categoryXml.CategoriesLoader;
+import pb138.rss.categoryXml.CategoriesSaver;
 import pb138.rss.feed.RssFeed;
 
 /**
