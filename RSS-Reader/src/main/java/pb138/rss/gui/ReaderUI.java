@@ -1,11 +1,14 @@
 package pb138.rss.gui;
 
+import pb138.rss.categoryXml.CategoriesLoader;
 import java.io.File;
 import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import pb138.rss.configuration.ConfigurationLoader;
 import pb138.rss.configuration.ConfigurationSaver;
 import pb138.rss.feed.RssFeedContainer;
@@ -15,15 +18,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerException;
 import org.apache.log4j.Logger;
-import pb138.rss.templates.XSLTProcesor;
-import java.util.HashSet;
-import java.util.Set;
-import javax.swing.DefaultComboBoxModel;
 import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
-import pb138.rss.categoryXml.CategoriesLoader;
 import pb138.rss.categoryXml.CategoriesSaver;
 import pb138.rss.feed.RssFeed;
+import pb138.rss.templates.XSLTProcesor;
 
 /**
  *
@@ -38,8 +37,9 @@ public class ReaderUI extends javax.swing.JFrame {
     private List<RssFeedReaderTask> tasks;
     private CategoryManagerImpl cman;
     private Set<Category> categories;
-    DefaultComboBoxModel<Category> categorySelectorModel;
-    DefaultComboBoxModel<RssFeed> feedSelectorModel;
+    private DefaultComboBoxModel<Category> categorySelectorModel;
+    private DefaultComboBoxModel<RssFeed> feedSelectorModel;
+    private RssFeedContainer filtered;
 
     /**
      * Creates new form ReaderUI
@@ -51,6 +51,7 @@ public class ReaderUI extends javax.swing.JFrame {
         feedContainer = new RssFeedContainer();
         downloader = new RssFeedDownloader(feedContainer, 3);
         categories = new HashSet<>();
+        filtered = new RssFeedContainer();
 
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
@@ -71,6 +72,9 @@ public class ReaderUI extends javax.swing.JFrame {
         cman = new CategoryManagerImpl(categories);
         categorySelectorModel = fillCategorySelectorModel();
         categorySelector.setModel(categorySelectorModel);
+        feedSelectorModel = fillFeedSelectorModel();
+        feedSelector.setModel(feedSelectorModel);
+        
     }
     
     private DefaultComboBoxModel<Category> fillCategorySelectorModel() {
@@ -134,7 +138,7 @@ public class ReaderUI extends javax.swing.JFrame {
                 searchButtonActionPerformed(evt);
             }
         });
-
+        
         addFeedButton.setText("Add Feed");
         addFeedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +174,7 @@ public class ReaderUI extends javax.swing.JFrame {
             }
         });
 
-        feedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        feedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         feedSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 feedSelectorActionPerformed(evt);
@@ -222,7 +226,7 @@ public class ReaderUI extends javax.swing.JFrame {
         jTextPane1.setText(initialText);
         jScrollPane2.setViewportView(jTextPane1);
 
-        categorySelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        categorySelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         categorySelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categorySelectorActionPerformed(evt);
@@ -308,6 +312,7 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
+        //updateFeedList();
     }
 
     private void removeFeedButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,6 +330,7 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
+        //updateFeedList();
     }
 
     private void waitForStatus(int status) {
@@ -342,6 +348,7 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+        filtered = dialog.getRssFeedContainer();
     }
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,6 +360,7 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+        filtered = dialog.getRssFeedContainer();
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,11 +380,11 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void feedSelectorActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
     }
 
     private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
     }
     
     private void updateCategoryList() {
