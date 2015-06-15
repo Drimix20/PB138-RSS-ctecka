@@ -17,8 +17,4 @@ public enum SearchCondition {
     BEGINS_WITH,
     /*koniec retazca*/
     ENDS_WITH,
-    /*starsie ako dany datum*/
-    IS_BEFORE,
-    /*novsie ako dany datum (polozka date)*/
-    IS_AFTER
 }
