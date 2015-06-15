@@ -7,11 +7,8 @@ package pb138.rss.search;
 public enum SearchField {
     
     TITLE,
-    LINK,
     DESCRIPTION,
     LANGUAGE,
-    COPYRIGHT,
     DATE,
-    AUTHOR,
-    GUID
+    AUTHOR
 }
