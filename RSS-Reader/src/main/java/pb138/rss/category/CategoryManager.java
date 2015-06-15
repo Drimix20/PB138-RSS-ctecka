@@ -1,5 +1,6 @@
 package pb138.rss.category;
 
+import java.util.List;
 import java.util.Set;
 import pb138.rss.feed.RssFeedContainer;
 
@@ -12,5 +13,5 @@ public interface CategoryManager {
     public void createCategory(Category category);    
     public void deleteCategory(RssFeedContainer container, Category category);
     public Set<Category> getAllCategories();
-    public RssFeedContainer showFeedsInCategory(RssFeedContainer container, Category category);
+    public RssFeedContainer showFeedsInCategories(RssFeedContainer container, List<Category> categories);
 }
