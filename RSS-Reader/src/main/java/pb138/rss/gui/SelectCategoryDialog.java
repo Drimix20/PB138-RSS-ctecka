@@ -69,6 +69,10 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
         this.container = container;
     }
     
+    public RssFeedContainer getRssFeedContainer() {
+        return container;
+    }
+    
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
      */
@@ -159,9 +163,9 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
 
     private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         List<Category> selected = jList1.getSelectedValuesList();
-        for (Category cat : selected) {
-            cman.showFeedsInCategory(container, cat);
-        }        
+        RssFeedContainer filtered = new RssFeedContainer();
+        container = cman.showFeedsInCategories(container, selected);
+               
         doClose(RET_OK);
     }                                          
 
