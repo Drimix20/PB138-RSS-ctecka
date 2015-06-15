@@ -16,6 +16,12 @@ import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerException;
 import org.apache.log4j.Logger;
 import pb138.rss.templates.XSLTProcesor;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
+import pb138.rss.category.Category;
+import pb138.rss.category.CategoryManagerImpl;
+import pb138.rss.feed.RssFeed;
 
 /**
  *
@@ -28,6 +34,10 @@ public class ReaderUI extends javax.swing.JFrame {
     private RssFeedContainer feedContainer;
     private RssFeedDownloader downloader;
     private List<RssFeedReaderTask> tasks;
+    private CategoryManagerImpl cman;
+    private Set<Category> categories;
+    DefaultComboBoxModel<Category> categorySelectorModel;
+    DefaultComboBoxModel<RssFeed> feedSelectorModel;
 
     /**
      * Creates new form ReaderUI
@@ -38,6 +48,7 @@ public class ReaderUI extends javax.swing.JFrame {
         tasks = new ArrayList<>();
         feedContainer = new RssFeedContainer();
         downloader = new RssFeedDownloader(feedContainer, 3);
+        categories = new HashSet<>();
 
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
@@ -47,6 +58,34 @@ public class ReaderUI extends javax.swing.JFrame {
             logger.error(ex.getMessage());
         }
         downloader.schedule(tasks);
+        
+        /*try {
+            File input = new File("src/main/java/category/xml/categories.xml");
+            CategoriesLoader cLoader = new CategoriesLoader(input);
+            categories = cLoader.loadCategories();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }*/
+        cman = new CategoryManagerImpl(categories);
+        categorySelectorModel = fillCategorySelectorModel();
+        categorySelector.setModel(categorySelectorModel);
+    }
+    
+    private DefaultComboBoxModel<Category> fillCategorySelectorModel() {
+        DefaultComboBoxModel<Category> cbModel = new DefaultComboBoxModel<>();
+        for (Category cat : cman.getAllCategories()) {
+            if (!cat.getName().equals("none"))
+                cbModel.addElement(cat);
+        }
+        return cbModel;
+    }
+    
+    private DefaultComboBoxModel<RssFeed> fillFeedSelectorModel() {
+        DefaultComboBoxModel<RssFeed> cbModel = new DefaultComboBoxModel<>();
+        for (String key : feedContainer.getKeys()) {
+            cbModel.addElement(feedContainer.getFromFeedContainer(key));
+        }
+        return cbModel;
     }
 
     /**
@@ -57,6 +96,7 @@ public class ReaderUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+        searchButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         addFeedButton = new javax.swing.JButton();
         exportButton = new javax.swing.JButton();
@@ -85,6 +125,13 @@ public class ReaderUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         addFeedButton.setText("Add Feed");
         addFeedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +252,7 @@ public class ReaderUI extends javax.swing.JFrame {
                                                 .addComponent(removeFromCatButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(deleteCatButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(exportButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(searchButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(feedSelector, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(categorySelector, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -236,6 +284,8 @@ public class ReaderUI extends javax.swing.JFrame {
                                         .addComponent(deleteCatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(55, 55, 55)
                                         .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                                         .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane2))
@@ -286,7 +336,8 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void selectCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        SelectCategoryDialog dialog = new SelectCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
+        SelectCategoryDialog dialog = new SelectCategoryDialog(this, rootPaneCheckingEnabled, cman);
+        dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
@@ -294,13 +345,28 @@ public class ReaderUI extends javax.swing.JFrame {
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+    
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        SearchDialog dialog = new SearchDialog(this, rootPaneCheckingEnabled);
+        dialog.setRssFeedContainer(feedContainer);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
+            RssFeed feed = (RssFeed)feedSelector.getSelectedItem();
+            Category cat = (Category)categorySelector.getSelectedItem();
+            feed.setCategory(cat);
+        }
     }
 
     private void removeFromCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        //TODO add your handling code here:
+        if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
+            RssFeed feed = (RssFeed)feedSelector.getSelectedItem();
+            Category cat = new Category("none");
+            feed.setCategory(cat);
+        }
     }
 
     private void feedSelectorActionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,19 +376,30 @@ public class ReaderUI extends javax.swing.JFrame {
     private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+    
+    private void updateCategoryList() {
+        categorySelectorModel = fillCategorySelectorModel();
+        categorySelector.setModel(categorySelectorModel);
+    }
+    
+    private void updateFeedList() {
+        feedSelectorModel = fillFeedSelectorModel();
+        feedSelector.setModel(feedSelectorModel);
+    }
 
     private void createCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        NewCategoryDialog dialog = new NewCategoryDialog(this, rootPaneCheckingEnabled);
+        NewCategoryDialog dialog = new NewCategoryDialog(this, rootPaneCheckingEnabled, cman);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+        updateCategoryList();
     }
 
     private void deleteCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        //TODO empty list ma byt list kategorii
-        DeleteCategoryDialog dialog = new DeleteCategoryDialog(this, rootPaneCheckingEnabled, Arrays.asList("Categorie1", "Categorie2", "Categorie3"));
+        DeleteCategoryDialog dialog = new DeleteCategoryDialog(this, rootPaneCheckingEnabled, cman);
+        dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+        updateCategoryList();
     }
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -407,6 +484,7 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
+    private javax.swing.JButton searchButton;
     private javax.swing.JButton addFeedButton;
     private javax.swing.JButton exportButton;
     private javax.swing.JButton addToCatButton;
