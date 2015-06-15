@@ -59,13 +59,13 @@ public class ReaderUI extends javax.swing.JFrame {
         }
         downloader.schedule(tasks);
         
-        /*try {
+        try {
             File input = new File("src/main/java/category/xml/categories.xml");
             CategoriesLoader cLoader = new CategoriesLoader(input);
             categories = cLoader.loadCategories();
         } catch (Exception e) {
             logger.error(e.getMessage());
-        }*/
+        }
         cman = new CategoryManagerImpl(categories);
         categorySelectorModel = fillCategorySelectorModel();
         categorySelector.setModel(categorySelectorModel);
