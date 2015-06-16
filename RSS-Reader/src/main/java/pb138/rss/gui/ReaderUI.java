@@ -22,6 +22,7 @@ import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
 import pb138.rss.categoryXml.CategoriesSaver;
 import pb138.rss.feed.RssFeed;
+import pb138.rss.listener.RssFeedContainerChangeListener;
 import pb138.rss.templates.XSLTProcesor;
 
 /**
@@ -49,6 +50,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
         tasks = new ArrayList<>();
         feedContainer = new RssFeedContainer();
+        feedContainer.setListener(new RssFeedContainerChangeListener());
         downloader = new RssFeedDownloader(feedContainer, 3);
         categories = new HashSet<>();
         filtered = new RssFeedContainer();
@@ -61,7 +63,7 @@ public class ReaderUI extends javax.swing.JFrame {
             logger.error(ex.getMessage());
         }
         downloader.schedule(tasks);
-        
+
         try {
             File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
             CategoriesLoader cLoader = new CategoriesLoader(input);
@@ -74,18 +76,19 @@ public class ReaderUI extends javax.swing.JFrame {
         categorySelector.setModel(categorySelectorModel);
         feedSelectorModel = fillFeedSelectorModel();
         feedSelector.setModel(feedSelectorModel);
-        
+
     }
-    
+
     private DefaultComboBoxModel<Category> fillCategorySelectorModel() {
         DefaultComboBoxModel<Category> cbModel = new DefaultComboBoxModel<>();
         for (Category cat : cman.getAllCategories()) {
-            if (!cat.getName().equals("none"))
+            if (!cat.getName().equals("none")) {
                 cbModel.addElement(cat);
+            }
         }
         return cbModel;
     }
-    
+
     private DefaultComboBoxModel<RssFeed> fillFeedSelectorModel() {
         DefaultComboBoxModel<RssFeed> cbModel = new DefaultComboBoxModel<>();
         for (String key : feedContainer.getKeys()) {
@@ -138,7 +141,7 @@ public class ReaderUI extends javax.swing.JFrame {
                 searchButtonActionPerformed(evt);
             }
         });
-        
+
         addFeedButton.setText("Add Feed");
         addFeedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,7 +357,7 @@ public class ReaderUI extends javax.swing.JFrame {
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-    
+
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
         SearchDialog dialog = new SearchDialog(this, rootPaneCheckingEnabled);
         dialog.setRssFeedContainer(feedContainer);
@@ -365,15 +368,15 @@ public class ReaderUI extends javax.swing.JFrame {
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
-            RssFeed feed = (RssFeed)feedSelector.getSelectedItem();
-            Category cat = (Category)categorySelector.getSelectedItem();
+            RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
+            Category cat = (Category) categorySelector.getSelectedItem();
             feed.setCategory(cat);
         }
     }
 
     private void removeFromCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
-            RssFeed feed = (RssFeed)feedSelector.getSelectedItem();
+            RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
             Category cat = new Category("none");
             feed.setCategory(cat);
         }
@@ -386,12 +389,12 @@ public class ReaderUI extends javax.swing.JFrame {
     private void categorySelectorActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
-    
+
     private void updateCategoryList() {
         categorySelectorModel = fillCategorySelectorModel();
         categorySelector.setModel(categorySelectorModel);
     }
-    
+
     private void updateFeedList() {
         feedSelectorModel = fillFeedSelectorModel();
         feedSelector.setModel(feedSelectorModel);
@@ -438,7 +441,7 @@ public class ReaderUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
-        
+
         try {
             File output = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
             CategoriesSaver saver = new CategoriesSaver(output);
@@ -446,7 +449,7 @@ public class ReaderUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
-        
+
         System.exit(0);
     }
 
