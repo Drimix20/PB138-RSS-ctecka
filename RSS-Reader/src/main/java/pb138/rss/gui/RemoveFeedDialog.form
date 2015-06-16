@@ -107,6 +107,9 @@
             <Property name="cellRenderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new CheckboxListCellRenderer()" type="code"/>
             </Property>
+            <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new CheckboxSelectionModel()" type="code"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

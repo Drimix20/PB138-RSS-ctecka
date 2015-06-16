@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import pb138.rss.gui.renderer.CheckboxListCellRenderer;
+import pb138.rss.gui.renderer.CheckboxSelectionModel;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
@@ -118,6 +119,7 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
         jList1.setModel(listModel);
         jList1.setToolTipText("");
         jList1.setCellRenderer(new CheckboxListCellRenderer());
+        jList1.setSelectionModel(new CheckboxSelectionModel());
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
