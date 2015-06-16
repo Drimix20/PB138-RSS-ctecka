@@ -1,5 +1,6 @@
 package pb138.rss.gui;
 
+import pb138.rss.converter.ContainerToHtmlConverter;
 import pb138.rss.categoryXml.CategoriesLoader;
 import java.io.File;
 import java.net.URLDecoder;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import pb138.rss.configuration.ConfigurationLoader;
 import pb138.rss.configuration.ConfigurationSaver;
@@ -22,6 +24,8 @@ import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
 import pb138.rss.categoryXml.CategoriesSaver;
 import pb138.rss.feed.RssFeed;
+import pb138.rss.file.RssFileReader;
+import pb138.rss.file.RssFileWriter;
 import pb138.rss.listener.RssFeedContainerChangeListener;
 import pb138.rss.templates.XSLTProcesor;
 
@@ -40,21 +44,32 @@ public class ReaderUI extends javax.swing.JFrame {
     private Set<Category> categories;
     private DefaultComboBoxModel<Category> categorySelectorModel;
     private DefaultComboBoxModel<RssFeed> feedSelectorModel;
-    private RssFeedContainer filtered;
+    private RssFeedContainerChangeListener listener;
 
     /**
      * Creates new form ReaderUI
      */
     public ReaderUI() {
         initComponents();
+        feedContainer = new RssFeedContainer();
+        // načitanie uložených feedov
+        RssFileReader reader = new RssFileReader(feedContainer, "src/main/java/pb138/rss/file/feeds.xml");
+        reader.run();
+        
+        // inicializovanie konvertoru
+        String mainFilePath = "src/main/java/pb138/rss/file/feeds.xml";
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath,xslPath);
 
         tasks = new ArrayList<>();
-        feedContainer = new RssFeedContainer();
-        feedContainer.setListener(new RssFeedContainerChangeListener());
+        this.listener = new RssFeedContainerChangeListener(this.jTextPane1, converter, new RssFileWriter(feedContainer, mainFilePath));
+        feedContainer.setListener(listener);
         downloader = new RssFeedDownloader(feedContainer, 3);
         categories = new HashSet<>();
-        filtered = new RssFeedContainer();
-
+        
+        
+        
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
             ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
@@ -76,7 +91,6 @@ public class ReaderUI extends javax.swing.JFrame {
         categorySelector.setModel(categorySelectorModel);
         feedSelectorModel = fillFeedSelectorModel();
         feedSelector.setModel(feedSelectorModel);
-
     }
 
     private DefaultComboBoxModel<Category> fillCategorySelectorModel() {
@@ -293,9 +307,9 @@ public class ReaderUI extends javax.swing.JFrame {
                                         .addComponent(deleteCatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(55, 55, 55)
                                         .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                                         .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                         .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane2))
                         .addContainerGap())
@@ -351,11 +365,30 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
-        filtered = dialog.getRssFeedContainer();
+        
+        RssFeedContainer filtered = dialog.getRssFeedContainer();
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        try {
+            this.jTextPane1.setText(converter.getString());
+            this.listener.setChangeJTextPane(false);
+        } catch (TransformerException ex) {
+            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.listener.setChangeJTextPane(true);
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath,xslPath);
+        try {
+            this.jTextPane1.setText(converter.getString());
+            this.listener.setChangeJTextPane(false);
+        } catch (TransformerException ex) {
+            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,7 +396,17 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
-        filtered = dialog.getRssFeedContainer();
+        
+        RssFeedContainer filtered = dialog.getRssFeedContainer();
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        try {
+            this.jTextPane1.setText(converter.getString());
+            this.listener.setChangeJTextPane(false);
+        } catch (TransformerException ex) {
+            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -467,6 +510,13 @@ public class ReaderUI extends javax.swing.JFrame {
             jarFile = new File(jarFilePath);
         }
         return jarFile.getParentFile().getAbsolutePath();
+    }
+    
+    private ContainerToHtmlConverter createConverter(RssFeedContainer container, String filePath, String xslPath) {
+        return new ContainerToHtmlConverter(
+                        new RssFileWriter(container, filePath),
+                        new XSLTProcesor(xslPath),
+                        filePath);
     }
 
     /**
