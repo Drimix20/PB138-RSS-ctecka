@@ -36,7 +36,9 @@ public class RssFeedContainer implements Container {
             logger.info("Insert new feed items");
             feedContainer.put(key, feed);
         }
-        listener.containerChanged(this);
+        if (listener != null) {
+            listener.containerChanged(this);
+        }
     }
 
     @Override
