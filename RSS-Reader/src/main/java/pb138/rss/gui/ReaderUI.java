@@ -327,7 +327,7 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
-        //updateFeedList();
+        updateFeedList();
     }
 
     private void removeFeedButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,7 +344,7 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
-        //updateFeedList();
+        updateFeedList();
     }
 
     private void waitForStatus(int status) {
