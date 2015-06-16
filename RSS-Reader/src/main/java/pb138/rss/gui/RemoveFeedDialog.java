@@ -10,8 +10,10 @@ import javax.swing.ActionMap;
 import javax.swing.DefaultListModel;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import pb138.rss.gui.renderer.CheckboxListCellRenderer;
+import pb138.rss.gui.renderer.CheckboxSelectionModel;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
@@ -117,6 +119,7 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
         jList1.setModel(listModel);
         jList1.setToolTipText("");
         jList1.setCellRenderer(new CheckboxListCellRenderer());
+        jList1.setSelectionModel(new CheckboxSelectionModel());
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,13 +160,18 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftButtonActionPerformed
-        int[] selectedIndices = jList1.getSelectedIndices();
-        final List<RssFeedReaderTask> tasksToDelete = new ArrayList<>();
-        for (int i = 0; i < selectedIndices.length; i++) {
-            tasksToDelete.add(this.feedReaderTask.get(i));
-        }
-        for (RssFeedReaderTask task : tasksToDelete) {
-            feedReaderTask.remove(task);
+        int o = JOptionPane.showConfirmDialog(rootPane, "Do you really want to delete?");
+        if (o == 0) {
+            int[] selectedIndices = jList1.getSelectedIndices();
+            final List<RssFeedReaderTask> tasksToDelete = new ArrayList<>();
+            for (int i = 0; i < selectedIndices.length; i++) {
+                tasksToDelete.add(this.feedReaderTask.get(selectedIndices[i]));
+            }
+            for (RssFeedReaderTask task : tasksToDelete) {
+                feedReaderTask.remove(task);
+            }
+
+            JOptionPane.showMessageDialog(rootPane, "Selected feeds deleted");
         }
         doClose(RET_OK);
     }//GEN-LAST:event_leftButtonActionPerformed

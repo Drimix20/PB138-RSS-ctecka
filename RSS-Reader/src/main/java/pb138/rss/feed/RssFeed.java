@@ -16,7 +16,7 @@ public class RssFeed {
     private final String language;
     private final String copyright;
     private final String pubDate;
-    private Category category  = new Category("none");
+    private Category category = new Category("none");
 
     private RssFeedImage image = new RssFeedImage();
     private Set<RssFeedItem> items;
@@ -78,20 +78,23 @@ public class RssFeed {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
+    public String getExtendedToString() {
         return "Rss feed [copyright=" + copyright + ", description=" + description
                 + ", language=" + language + ", link=" + link + ", pubDate="
                 + pubDate + ", title=" + title + ", items=" + items.size() + "]";
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return title;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public Category getCategory() {
         return this.category;
     }
-    
+
 }

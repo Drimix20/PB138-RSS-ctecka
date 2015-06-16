@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
 import pb138.rss.categoryXml.CategoriesSaver;
+import pb138.rss.feed.Container;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.file.RssFileReader;
 import pb138.rss.file.RssFileWriter;
@@ -69,7 +70,6 @@ public class ReaderUI extends javax.swing.JFrame {
         categories = new HashSet<>();
         
         
-        
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
             ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
@@ -77,6 +77,8 @@ public class ReaderUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
+
+        loadRssFeedTaskConfiguration(feedContainer);
         downloader.schedule(tasks);
 
         try {
@@ -91,6 +93,16 @@ public class ReaderUI extends javax.swing.JFrame {
         categorySelector.setModel(categorySelectorModel);
         feedSelectorModel = fillFeedSelectorModel();
         feedSelector.setModel(feedSelectorModel);
+    }
+
+    private void loadRssFeedTaskConfiguration(Container container) {
+        try {
+            File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
+            ConfigurationLoader loader = new ConfigurationLoader(inputFile, container);
+            tasks = loader.loadConfiguration();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
     }
 
     private DefaultComboBoxModel<Category> fillCategorySelectorModel() {
@@ -314,6 +326,13 @@ public class ReaderUI extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2))
                         .addContainerGap())
         );
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                saveRssFeedConfiguration(tasks);
+                System.exit(0);
+            }
+        });
 
         pack();
     }// </editor-fold>
@@ -329,11 +348,10 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
-        //updateFeedList();
+        updateFeedList();
     }
 
     private void removeFeedButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        logger.info("Count of reader task: " + tasks.size());
         List<String> labels = new ArrayList<>();
         for (RssFeedReaderTask label : this.tasks) {
             labels.add(label.getLabel());
@@ -347,7 +365,7 @@ public class ReaderUI extends javax.swing.JFrame {
         waitForStatus(dialog.getReturnStatus());
 
         downloader.schedule(tasks);
-        //updateFeedList();
+        updateFeedList();
     }
 
     private void waitForStatus(int status) {
@@ -477,13 +495,7 @@ public class ReaderUI extends javax.swing.JFrame {
     }
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            File outputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
-            ConfigurationSaver saver = new ConfigurationSaver(outputFile);
-            saver.saveConfiguration(tasks);
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
+        saveRssFeedConfiguration(tasks);
 
         try {
             File output = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
@@ -494,6 +506,16 @@ public class ReaderUI extends javax.swing.JFrame {
         }
 
         System.exit(0);
+    }
+
+    private void saveRssFeedConfiguration(List<RssFeedReaderTask> tasks) {
+        try {
+            File outputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
+            ConfigurationSaver saver = new ConfigurationSaver(outputFile);
+            saver.saveConfiguration(tasks);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
     }
 
     private String getJarContainingFolder(Class aclass) throws Exception {
