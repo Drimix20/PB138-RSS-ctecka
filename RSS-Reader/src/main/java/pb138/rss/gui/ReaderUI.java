@@ -305,6 +305,13 @@ public class ReaderUI extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2))
                         .addContainerGap())
         );
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                saveRssFeedConfiguration(tasks);
+                System.exit(0);
+            }
+        });
 
         pack();
     }// </editor-fold>
