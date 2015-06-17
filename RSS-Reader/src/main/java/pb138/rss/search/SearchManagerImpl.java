@@ -39,8 +39,10 @@ public class SearchManagerImpl implements SearchManager {
                 oneQuery = false;
                 for (SearchQuery query : queries) {
                     if (!query.matchFeed(result)) {
-                        if(all)
+                        if(all) {
                             allQueries = false;
+                            break;
+                        }
                     }
                     else oneQuery = true;
                 }
@@ -75,8 +77,10 @@ public class SearchManagerImpl implements SearchManager {
             oneQuery = false;
             for (SearchQuery query : queries) {
                 if (!query.matchItem(result)) {
-                    if(all) 
+                    if(all) {
                         allQueries = false;
+                        break;
+                    }
                 }
                 else oneQuery = true;
             }
