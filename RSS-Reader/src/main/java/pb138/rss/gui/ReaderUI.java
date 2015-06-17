@@ -433,6 +433,8 @@ public class ReaderUI extends javax.swing.JFrame {
             Category cat = (Category) categorySelector.getSelectedItem();
             feed.setCategory(cat);
         }
+        
+        this.listener.containerChanged(feedContainer);
     }
 
     private void removeFromCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,6 +443,8 @@ public class ReaderUI extends javax.swing.JFrame {
             Category cat = new Category("none");
             feed.setCategory(cat);
         }
+        
+        this.listener.containerChanged(feedContainer);
     }
 
     private void feedSelectorActionPerformed(java.awt.event.ActionEvent evt) {
