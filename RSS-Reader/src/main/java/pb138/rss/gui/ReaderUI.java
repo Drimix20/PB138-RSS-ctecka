@@ -29,6 +29,11 @@ import pb138.rss.file.RssFileReader;
 import pb138.rss.file.RssFileWriter;
 import pb138.rss.listener.RssFeedContainerChangeListener;
 import pb138.rss.templates.XSLTProcesor;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  *
