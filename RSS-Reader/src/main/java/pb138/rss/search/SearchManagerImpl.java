@@ -25,6 +25,8 @@ public class SearchManagerImpl implements SearchManager {
     public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all) {
         
         RssFeedContainer filtered = new RssFeedContainer();
+        RssFeed filteredItems = new RssFeed();
+        Set<RssFeedItem> items = new HashSet<>();
         boolean oneQuery;
         boolean allQueries;
         for (String key : container.getKeys()) {
@@ -44,9 +46,12 @@ public class SearchManagerImpl implements SearchManager {
             }
             else if (oneQuery)
                 filtered.putIntoFeedContainer(key, result);
-            if (!runSearchForFeed(result, queries, all).isEmpty())
-                filtered.putIntoFeedContainer(key, result);
+            
+            items = runSearchForFeed(result, queries, all);
+            if (!items.isEmpty())
+                filteredItems.addItems(items);
         }
+        filtered.putIntoFeedContainer("filtered", filteredItems);
         return filtered;
     }
  
