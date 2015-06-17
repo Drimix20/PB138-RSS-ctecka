@@ -19,6 +19,7 @@ public class SearchManagerImpl implements SearchManager {
      * @param container
      * @param queries
      * @param all if true then all queries else any query from set queries
+     * @return filtered container
      */
     @Override
     public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all) {
@@ -43,7 +44,7 @@ public class SearchManagerImpl implements SearchManager {
             }
             else if (oneQuery)
                 filtered.putIntoFeedContainer(key, result);
-            else if (runSearchForFeed(result, queries, all) != null)
+            if (!runSearchForFeed(result, queries, all).isEmpty())
                 filtered.putIntoFeedContainer(key, result);
         }
         return filtered;
