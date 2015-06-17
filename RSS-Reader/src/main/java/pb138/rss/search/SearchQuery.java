@@ -56,259 +56,268 @@ public class SearchQuery {
      */
     public boolean matchFeed(RssFeed feed) {
         
-        boolean result = false;
+        boolean any = false;
+        boolean titleRes = false, descrRes = false, langRes = false, dateRes = false;
         
         switch(field) {
+        case ANY: 
+            any = true;
+            
         case TITLE:
             switch(cond) {
             case IS:
-                result = feed.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
+                titleRes = feed.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !feed.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
+                titleRes = !feed.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = feed.getTitle().toLowerCase().contains(expr.toLowerCase());
+                titleRes = feed.getTitle().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !feed.getTitle().toLowerCase().contains(expr.toLowerCase());
+                titleRes = !feed.getTitle().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = feed.getTitle().toLowerCase().startsWith(expr.toLowerCase());
+                titleRes = feed.getTitle().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = feed.getTitle().toLowerCase().endsWith(expr.toLowerCase());
+                titleRes = feed.getTitle().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY://viac stringov
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = feed.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    titleRes = feed.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (titleRes) 
                         break;
                 }
                 break;
             } 
-            break;
+            if (!any) break;
         case DESCRIPTION:
             switch(cond) {
             case IS:
-                result = feed.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
+                descrRes = feed.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !feed.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
+                descrRes = !feed.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = feed.getDescription().toLowerCase().contains(expr.toLowerCase());
+                descrRes = feed.getDescription().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !feed.getDescription().toLowerCase().contains(expr.toLowerCase());
+                descrRes = !feed.getDescription().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = feed.getDescription().toLowerCase().startsWith(expr.toLowerCase());
+                descrRes = feed.getDescription().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = feed.getDescription().toLowerCase().endsWith(expr.toLowerCase());
+                descrRes = feed.getDescription().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = feed.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    descrRes = feed.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (descrRes) 
                         break;
                 }
                 break;
             } 
-            break;
+            if (!any) break;
         case LANGUAGE:
             switch(cond) {
             case IS:
-                result = feed.getLanguage().toLowerCase().contentEquals(expr.toLowerCase());
+                langRes = feed.getLanguage().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !feed.getLanguage().toLowerCase().contentEquals(expr.toLowerCase());
+                langRes = !feed.getLanguage().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = feed.getLanguage().toLowerCase().contains(expr.toLowerCase());
+                langRes = feed.getLanguage().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !feed.getLanguage().toLowerCase().contains(expr.toLowerCase());
+                langRes = !feed.getLanguage().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = feed.getLanguage().toLowerCase().startsWith(expr.toLowerCase());
+                langRes = feed.getLanguage().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = feed.getLanguage().toLowerCase().endsWith(expr.toLowerCase());
+                langRes = feed.getLanguage().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = feed.getLanguage().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    langRes = feed.getLanguage().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (langRes) 
                         break;
                 }
                 break;
             }
-            break;
+            if (!any) break;
         case DATE:
             switch(cond) {
             case IS:
-                result = feed.getPubDate().toLowerCase().contentEquals(expr.toLowerCase());
+                dateRes = feed.getPubDate().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !feed.getPubDate().toLowerCase().contentEquals(expr.toLowerCase());
+                dateRes = !feed.getPubDate().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = feed.getPubDate().toLowerCase().contains(expr.toLowerCase());
+                dateRes = feed.getPubDate().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !feed.getPubDate().toLowerCase().contains(expr.toLowerCase());
+                dateRes = !feed.getPubDate().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = feed.getPubDate().toLowerCase().startsWith(expr.toLowerCase());
+                dateRes = feed.getPubDate().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = feed.getPubDate().toLowerCase().endsWith(expr.toLowerCase());
+                dateRes = feed.getPubDate().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = feed.getPubDate().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    dateRes = feed.getPubDate().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (dateRes) 
                         break;
                 }
                 break;
             }
             break;
         }
-        return result;
+        
+        return titleRes || descrRes || langRes || dateRes;
     }
     
     public boolean matchItem(RssFeedItem item) {
         
-        boolean result = false;
+        boolean any = false;
+        boolean titleRes = false, descrRes = false, authRes = false, dateRes = false;
          
-        switch(field) {             
+        switch(field) { 
+        case ANY: 
+            any = true;
+                
         case TITLE:
             switch(cond) {
             case IS:
-                result = item.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
+                titleRes = item.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !item.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
+                titleRes = !item.getTitle().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = item.getTitle().toLowerCase().contains(expr.toLowerCase());
+                titleRes = item.getTitle().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !item.getTitle().toLowerCase().contains(expr.toLowerCase());
+                titleRes = !item.getTitle().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = item.getTitle().toLowerCase().startsWith(expr.toLowerCase());
+                titleRes = item.getTitle().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = item.getTitle().toLowerCase().endsWith(expr.toLowerCase());
+                titleRes = item.getTitle().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = item.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    titleRes = item.getTitle().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (titleRes) 
                         break;
                 }
                 break;
             }
-            break;                          
+            if (!any) break;                          
         case DESCRIPTION:
             switch(cond) {
             case IS:
-                result = item.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
+                descrRes = item.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !item.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
+                descrRes = !item.getDescription().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = item.getDescription().toLowerCase().contains(expr.toLowerCase());
+                descrRes = item.getDescription().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !item.getDescription().toLowerCase().contains(expr.toLowerCase());
+                descrRes = !item.getDescription().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = item.getDescription().toLowerCase().startsWith(expr.toLowerCase());
+                descrRes = item.getDescription().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = item.getDescription().toLowerCase().endsWith(expr.toLowerCase());
+                descrRes = item.getDescription().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = item.getDescription().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    descrRes = item.getDescription().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (descrRes) 
                         break;
                 }
                 break;
             }
-            break;
+            if (!any) break;
         case DATE:
             switch(cond) {
             case IS:
-                result = item.getDate().toLowerCase().contentEquals(expr.toLowerCase());
+                dateRes = item.getDate().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !item.getDate().toLowerCase().contentEquals(expr.toLowerCase());
+                dateRes = !item.getDate().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = item.getDate().toLowerCase().contains(expr.toLowerCase());
+                dateRes = item.getDate().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !item.getDate().toLowerCase().contains(expr.toLowerCase());
+                dateRes = !item.getDate().toLowerCase().contains(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = item.getDate().toLowerCase().startsWith(expr.toLowerCase());
+                dateRes = item.getDate().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = item.getDate().toLowerCase().endsWith(expr.toLowerCase());
+                dateRes = item.getDate().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = item.getDate().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    dateRes = item.getDate().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (dateRes) 
                         break;
                 }
                 break;
             }
-            break;
+            if (!any) break;
         case AUTHOR:
             switch(cond) {
             case IS:
-                result = item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
+                authRes = item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case IS_NOT:
-                result = !item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
+                authRes = !item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case CONTAINS:
-                result = item.getAuthor().toLowerCase().contains(expr.toLowerCase());
+                authRes = item.getAuthor().toLowerCase().contains(expr.toLowerCase());
                 break;
             case CONTAINS_NOT:
-                result = !item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
+                authRes = !item.getAuthor().toLowerCase().contentEquals(expr.toLowerCase());
                 break;
             case BEGINS_WITH:
-                result = item.getAuthor().toLowerCase().startsWith(expr.toLowerCase());
+                authRes = item.getAuthor().toLowerCase().startsWith(expr.toLowerCase());
                 break;
             case ENDS_WITH:
-                result = item.getAuthor().toLowerCase().endsWith(expr.toLowerCase());
+                authRes = item.getAuthor().toLowerCase().endsWith(expr.toLowerCase());
                 break;
             case CONTAINS_ANY:
                 StringTokenizer defaultTokenizer = new StringTokenizer(expr.toLowerCase());
                 while (defaultTokenizer.hasMoreTokens()) {
-                    result = item.getAuthor().toLowerCase().contains(defaultTokenizer.nextToken());
-                    if (result) 
+                    authRes = item.getAuthor().toLowerCase().contains(defaultTokenizer.nextToken());
+                    if (authRes) 
                         break;
                 }
                 break;
             }
             break;
         }
-        return result;
+        return titleRes || descrRes || authRes || dateRes;
     }
 }
