@@ -253,6 +253,7 @@ public class SearchDialog extends javax.swing.JDialog {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         container = sman.runSearchForContainer(container, qman.getAllQueries(), allCheckBox.isSelected());
+        doClose(RET_OK);
     }                                            
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
