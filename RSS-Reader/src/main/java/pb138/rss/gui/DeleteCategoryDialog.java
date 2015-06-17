@@ -23,7 +23,7 @@ import pb138.rss.gui.renderer.CheckboxSelectionModel;
 public class DeleteCategoryDialog extends javax.swing.JDialog {
 
     private RssFeedContainer container;
-    private CategoryManagerImpl cman;
+    private final CategoryManagerImpl cman;
     private DefaultListModel<Category> listModel;
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -36,6 +36,9 @@ public class DeleteCategoryDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form EraseFromCategoryDialog
+     * @param parent
+     * @param modal
+     * @param cman
      */
     public DeleteCategoryDialog(java.awt.Frame parent, boolean modal, CategoryManagerImpl cman) {
         super(parent, modal);
@@ -53,6 +56,7 @@ public class DeleteCategoryDialog extends javax.swing.JDialog {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doClose(RET_CANCEL);
             }
@@ -160,14 +164,23 @@ public class DeleteCategoryDialog extends javax.swing.JDialog {
 
     private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {
         List<Category> selected = jList1.getSelectedValuesList();
+        boolean deleted = true;
         int o = JOptionPane.showConfirmDialog(rootPane, "Do you really want to delete?");
         if (o == 0) {
             for (Category cat : selected) {
                 cman.deleteCategory(container, cat);
+                if (cman.findByName(cat.getName()) != null)
+                    deleted = false;
             }
-            JOptionPane.showMessageDialog(rootPane, "Selected categories deleted");
+            if (deleted) 
+                JOptionPane.showMessageDialog(rootPane, "Selected categories deleted");
+            else
+                JOptionPane.showMessageDialog(rootPane, "Some of the categories were not deleted");
+            
+            this.listModel = createListModel();
+            jList1.setModel(listModel);
         }
-        doClose(RET_OK);
+        //doClose(RET_OK);
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +232,7 @@ public class DeleteCategoryDialog extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 DeleteCategoryDialog dialog = new DeleteCategoryDialog(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
