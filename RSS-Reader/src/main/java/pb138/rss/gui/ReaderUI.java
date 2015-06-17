@@ -521,16 +521,19 @@ public class ReaderUI extends javax.swing.JFrame {
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         saveRssFeedConfiguration(tasks);
+        saveCategories(cman.getAllCategories());
 
+        System.exit(0);
+    }
+    
+    private void saveCategories(Set<Category> categories) {
         try {
             File output = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
             CategoriesSaver saver = new CategoriesSaver(output);
-            saver.saveCategories(cman.getAllCategories());
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
+            saver.saveCategories(categories);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
-
-        System.exit(0);
     }
 
     private void saveRssFeedConfiguration(List<RssFeedReaderTask> tasks) {
