@@ -97,4 +97,7 @@ public class RssFeed {
         return this.category;
     }
 
+    public void addItems(Set<RssFeedItem> items) {
+        this.items.addAll(items);
+    }
 }
