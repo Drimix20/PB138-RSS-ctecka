@@ -22,7 +22,7 @@ import pb138.rss.category.CategoryManagerImpl;
  */
 public class NewCategoryDialog extends javax.swing.JDialog {
 
-    private CategoryManagerImpl cman;
+    private final CategoryManagerImpl cman;
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -34,6 +34,9 @@ public class NewCategoryDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form NewCategoryDialog
+     * @param parent
+     * @param modal
+     * @param cman
      */
     public NewCategoryDialog(java.awt.Frame parent, boolean modal, CategoryManagerImpl cman) {
         super(parent, modal);
@@ -46,6 +49,7 @@ public class NewCategoryDialog extends javax.swing.JDialog {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doClose(RET_CANCEL);
             }
@@ -147,14 +151,19 @@ public class NewCategoryDialog extends javax.swing.JDialog {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String input = nameTextField.getText().trim();
-        if (cman.findByName(input) != null) {
+        
+        if (input.equals("none") || input.length() <= 0) 
+            JOptionPane.showMessageDialog(rootPane, "Invalid name");
+            
+        else if (cman.findByName(input) != null) 
             JOptionPane.showMessageDialog(rootPane, "Category already exist");
-        }
-        if (!input.equals("none") && input.length() > 0 && cman.findByName(input) == null) {
+        
+        else { 
             cman.createCategory(new Category(input));
-            JOptionPane.showMessageDialog(rootPane, "Category created");
-        }
-        doClose(RET_OK);
+            if (cman.findByName(input) != null)
+                JOptionPane.showMessageDialog(rootPane, "Category created");
+        }        
+        //doClose(RET_OK);
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,6 +212,7 @@ public class NewCategoryDialog extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 NewCategoryDialog dialog = new NewCategoryDialog(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
