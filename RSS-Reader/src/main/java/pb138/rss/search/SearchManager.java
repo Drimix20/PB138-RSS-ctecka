@@ -11,6 +11,6 @@ import pb138.rss.feed.RssFeedItem;
  */
 public interface SearchManager {
     
-    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all);
+    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all, boolean items, boolean feeds);
     public Set<RssFeedItem> runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all);
 }
