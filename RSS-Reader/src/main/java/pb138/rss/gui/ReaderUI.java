@@ -29,6 +29,11 @@ import pb138.rss.file.RssFileReader;
 import pb138.rss.file.RssFileWriter;
 import pb138.rss.listener.RssFeedContainerChangeListener;
 import pb138.rss.templates.XSLTProcesor;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  *
@@ -246,6 +251,7 @@ public class ReaderUI extends javax.swing.JFrame {
         });
 
         jTextPane1.setEditable(false);
+        jTextPane1.setEditorKit(jTextPane1.createEditorKitForContentType("text/html"));
         jTextPane1.setContentType("text/html");
         String initialText = "<html>\n"
                 + "<h2>The feed contents will be displayed here.\n</h2>"
@@ -254,6 +260,21 @@ public class ReaderUI extends javax.swing.JFrame {
 
         jTextPane1.setText(initialText);
         jScrollPane2.setViewportView(jTextPane1);
+        
+        jTextPane1.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                            Desktop.getDesktop().browse(e.getURL().toURI());
+                        } catch (IOException | URISyntaxException ex) {
+                            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        });
 
         categorySelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         categorySelector.addActionListener(new java.awt.event.ActionListener() {
