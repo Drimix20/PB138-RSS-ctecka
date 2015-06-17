@@ -10,5 +10,6 @@ public enum SearchField {
     DESCRIPTION,
     LANGUAGE,
     DATE,
-    AUTHOR
+    AUTHOR,
+    ANY
 }
