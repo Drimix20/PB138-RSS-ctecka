@@ -9,6 +9,8 @@ package pb138.rss.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.DefaultComboBoxModel;
@@ -16,12 +18,17 @@ import javax.swing.DefaultListModel;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import javax.xml.transform.TransformerException;
+import pb138.rss.converter.ContainerToHtmlConverter;
 import pb138.rss.feed.RssFeedContainer;
+import pb138.rss.file.RssFileWriter;
+import pb138.rss.listener.RssFeedContainerChangeListener;
 import pb138.rss.search.SearchCondition;
 import pb138.rss.search.SearchField;
 import pb138.rss.search.SearchManagerImpl;
 import pb138.rss.search.SearchQuery;
 import pb138.rss.search.SearchQueryManagerImpl;
+import pb138.rss.templates.XSLTProcesor;
 
 /**
  *
@@ -35,6 +42,7 @@ public class SearchDialog extends javax.swing.JDialog {
     private DefaultListModel<SearchQuery> listModel;
     DefaultComboBoxModel<SearchField> comboModelField;
     DefaultComboBoxModel<SearchCondition> comboModelCond;
+    RssFeedContainer filtered;
     
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -47,6 +55,8 @@ public class SearchDialog extends javax.swing.JDialog {
     
     /**
      * Creates new form SearchDialog
+     * @param parent
+     * @param modal
      */
     public SearchDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -62,6 +72,7 @@ public class SearchDialog extends javax.swing.JDialog {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doClose(RET_CANCEL);
             }
@@ -90,12 +101,12 @@ public class SearchDialog extends javax.swing.JDialog {
         return comboModelCond;
     }
     
-    public void setRssFeedContainer(RssFeedContainer container) {
+    public void setContainer(RssFeedContainer container) {
         this.container = container;
     }
     
-    public RssFeedContainer getRssFeedContainer() {
-        return container;
+    public RssFeedContainer getFilteredContainer() {
+        return filtered;
     }
     
     /**
@@ -268,11 +279,43 @@ public class SearchDialog extends javax.swing.JDialog {
     }                                              
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        container = sman.runSearchForContainer(container, qman.getAllQueries(), 
-                allQueriesCheckBox.isSelected(), feedsCheckBox.isSelected(), itemsCheckBox.isSelected());
-        doClose(RET_OK);
+        Set<SearchQuery> queries = qman.getAllQueries();
+  
+        if (queries.isEmpty()) 
+            filtered = container;
+        else {
+            filtered = sman.runSearchForContainer(container, queries, 
+                    allQueriesCheckBox.isSelected(), feedsCheckBox.isSelected(), itemsCheckBox.isSelected());
+        }
+            
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        try {
+            this.jTextPane1.setText(converter.getString());
+            this.listener.setChangeJTextPane(false);
+        } catch (TransformerException ex) {
+            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }                                            
-
+    
+    private javax.swing.JTextPane jTextPane1;
+    public void setTextPane(javax.swing.JTextPane textPane) {
+        jTextPane1 = textPane;
+    }
+    
+    private RssFeedContainerChangeListener listener;
+    public void setListener(RssFeedContainerChangeListener listener) {
+        this.listener = listener;
+    }
+    
+    private ContainerToHtmlConverter createConverter(RssFeedContainer container, String filePath, String xslPath) {
+        return new ContainerToHtmlConverter(
+                        new RssFileWriter(container, filePath),
+                        new XSLTProcesor(xslPath),
+                        filePath);
+    }
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         doClose(RET_CANCEL);
     }                                  
@@ -292,7 +335,7 @@ public class SearchDialog extends javax.swing.JDialog {
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
-        dispose();
+        dispose();        
     }
     
     /**
@@ -324,6 +367,7 @@ public class SearchDialog extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 SearchDialog dialog = new SearchDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
