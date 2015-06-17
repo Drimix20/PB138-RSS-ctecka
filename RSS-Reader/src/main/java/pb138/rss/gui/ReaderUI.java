@@ -61,20 +61,19 @@ public class ReaderUI extends javax.swing.JFrame {
         // načitanie uložených feedov
         RssFileReader reader = new RssFileReader(feedContainer, "src/main/java/pb138/rss/file/feeds.xml");
         reader.run();
-        
+
         // inicializovanie konvertoru
         String mainFilePath = "src/main/java/pb138/rss/file/feeds.xml";
         String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
         String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
-        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath,xslPath);
+        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath, xslPath);
 
         tasks = new ArrayList<>();
         this.listener = new RssFeedContainerChangeListener(this.jTextPane1, converter, new RssFileWriter(feedContainer, mainFilePath));
         feedContainer.setListener(listener);
         downloader = new RssFeedDownloader(feedContainer, 3);
         categories = new HashSet<>();
-        
-        
+
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
             ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
@@ -260,7 +259,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
         jTextPane1.setText(initialText);
         jScrollPane2.setViewportView(jTextPane1);
-        
+
         jTextPane1.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -351,6 +350,7 @@ public class ReaderUI extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 saveRssFeedConfiguration(tasks);
+                saveCategories(categories);
                 System.exit(0);
             }
         });
@@ -404,11 +404,11 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
-        
+
         RssFeedContainer filtered = dialog.getRssFeedContainer();
         String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
         String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
-        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        ContainerToHtmlConverter converter = createConverter(filtered, filePath, xslPath);
         try {
             this.jTextPane1.setText(converter.getString());
             this.listener.setChangeJTextPane(false);
@@ -421,7 +421,7 @@ public class ReaderUI extends javax.swing.JFrame {
         this.listener.setChangeJTextPane(true);
         String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
         String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
-        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath,xslPath);
+        ContainerToHtmlConverter converter = createConverter(feedContainer, filePath, xslPath);
         try {
             this.jTextPane1.setText(converter.getString());
             this.listener.setChangeJTextPane(false);
@@ -435,11 +435,11 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setRssFeedContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
-        
+
         RssFeedContainer filtered = dialog.getRssFeedContainer();
         String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
         String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
-        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        ContainerToHtmlConverter converter = createConverter(filtered, filePath, xslPath);
         try {
             this.jTextPane1.setText(converter.getString());
             this.listener.setChangeJTextPane(false);
@@ -454,7 +454,7 @@ public class ReaderUI extends javax.swing.JFrame {
             Category cat = (Category) categorySelector.getSelectedItem();
             feed.setCategory(cat);
         }
-        
+
         this.listener.containerChanged(feedContainer);
     }
 
@@ -464,7 +464,7 @@ public class ReaderUI extends javax.swing.JFrame {
             Category cat = new Category("none");
             feed.setCategory(cat);
         }
-        
+
         this.listener.containerChanged(feedContainer);
     }
 
@@ -525,7 +525,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
         System.exit(0);
     }
-    
+
     private void saveCategories(Set<Category> categories) {
         try {
             File output = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
@@ -561,12 +561,12 @@ public class ReaderUI extends javax.swing.JFrame {
         }
         return jarFile.getParentFile().getAbsolutePath();
     }
-    
+
     private ContainerToHtmlConverter createConverter(RssFeedContainer container, String filePath, String xslPath) {
         return new ContainerToHtmlConverter(
-                        new RssFileWriter(container, filePath),
-                        new XSLTProcesor(xslPath),
-                        filePath);
+                new RssFileWriter(container, filePath),
+                new XSLTProcesor(xslPath),
+                filePath);
     }
 
     /**
