@@ -19,39 +19,48 @@ public class SearchManagerImpl implements SearchManager {
      * @param container
      * @param queries
      * @param all if true then all queries else any query from set queries
+     * @param feeds
+     * @param items
      * @return filtered container
      */
     @Override
-    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all) {
+    public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all, boolean feeds, boolean items) {
         
         RssFeedContainer filtered = new RssFeedContainer();
         RssFeed filteredItems = new RssFeed();
-        Set<RssFeedItem> items = new HashSet<>();
+        Set<RssFeedItem> foundItems = new HashSet<>();
         boolean oneQuery;
         boolean allQueries;
         for (String key : container.getKeys()) {
             RssFeed result = container.getFromFeedContainer(key);
-            allQueries = true;
-            oneQuery = false;
-            for (SearchQuery query : queries) {
-                if (!query.matchFeed(result)) {
-                    if(all)
-                        allQueries = false;
+            
+            if (feeds) {
+                allQueries = true;
+                oneQuery = false;
+                for (SearchQuery query : queries) {
+                    if (!query.matchFeed(result)) {
+                        if(all)
+                            allQueries = false;
+                    }
+                    else oneQuery = true;
                 }
-                else oneQuery = true;
-            }
-            if (all) {
-                if (allQueries)
+                if (all) {
+                    if (allQueries)
+                        filtered.putIntoFeedContainer(key, result);
+                }
+                else if (oneQuery)
                     filtered.putIntoFeedContainer(key, result);
             }
-            else if (oneQuery)
-                filtered.putIntoFeedContainer(key, result);
             
-            items = runSearchForFeed(result, queries, all);
-            if (!items.isEmpty())
-                filteredItems.addItems(items);
+            if(items) {
+                foundItems = runSearchForFeed(result, queries, all);
+                if (!foundItems.isEmpty())
+                    filteredItems.addItems(foundItems);
+            }
         }
-        filtered.putIntoFeedContainer("filtered", filteredItems);
+        if (!filteredItems.getItems().isEmpty()) {
+            filtered.putIntoFeedContainer("filtered", filteredItems);
+        }
         return filtered;
     }
  
