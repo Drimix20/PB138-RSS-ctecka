@@ -13,6 +13,7 @@ import pb138.rss.category.Category;
 import pb138.rss.category.CategoryManagerImpl;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.gui.renderer.CheckboxListCellRenderer;
+import pb138.rss.gui.renderer.CheckboxSelectionModel;
 
 /**
  *
@@ -34,6 +35,9 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form SelectCategorylDialog
+     * @param parent
+     * @param modal
+     * @param cman
      */
     public SelectCategoryDialog(java.awt.Frame parent, boolean modal, CategoryManagerImpl cman) {
         super(parent, modal);
@@ -51,6 +55,7 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doClose(RET_CANCEL);
             }
@@ -118,6 +123,7 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
 
         jList1.setModel(this.listModel);
         jList1.setCellRenderer(new CheckboxListCellRenderer());
+        jList1.setSelectionModel(new CheckboxSelectionModel());
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,7 +169,6 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
 
     private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         List<Category> selected = jList1.getSelectedValuesList();
-        RssFeedContainer filtered = new RssFeedContainer();
         container = cman.showFeedsInCategories(container, selected);
                
         doClose(RET_OK);
@@ -216,6 +221,7 @@ public class SelectCategoryDialog extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 SelectCategoryDialog dialog = new SelectCategoryDialog(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
