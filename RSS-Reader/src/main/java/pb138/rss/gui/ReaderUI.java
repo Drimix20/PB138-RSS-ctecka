@@ -428,6 +428,7 @@ public class ReaderUI extends javax.swing.JFrame {
         } catch (TransformerException ex) {
             java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextPane1.setCaretPosition(0);
     }
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
