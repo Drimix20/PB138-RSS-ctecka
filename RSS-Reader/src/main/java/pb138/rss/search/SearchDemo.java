@@ -25,8 +25,6 @@ public class SearchDemo {
         Set<SearchQuery> queries = qman.getAllQueries();   
            
         SearchManagerImpl sman = new SearchManagerImpl();
-        sman.runSearchForContainer(feedContainer, queries, true);
-        
-        
+        sman.runSearchForContainer(feedContainer, queries, true, true, true);
     }
 }
