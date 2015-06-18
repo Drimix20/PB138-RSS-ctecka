@@ -438,9 +438,10 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
         RssFeedContainer filtered = dialog.getFilteredContainer();
-        
-        if (filtered.getKeys().isEmpty())
+
+        if (filtered.getKeys().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Nothing found");
+        }
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,21 +449,27 @@ public class ReaderUI extends javax.swing.JFrame {
             RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
             Category cat = (Category) categorySelector.getSelectedItem();
             feed.setCategory(cat);
-            if (feed.getCategory().equals(cat))
+            if (feed.getCategory().equals(cat)) {
                 JOptionPane.showMessageDialog(rootPane, "Feed successfully added to category");
+            }
         }
 
         this.listener.containerChanged(feedContainer);
     }
 
     private void removeFromCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
-            RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
-            Category cat = new Category("none");
-            feed.setCategory(cat);
-            if (feed.getCategory().equals(cat))
-                JOptionPane.showMessageDialog(rootPane, "Feed successfully removed from category");
+        if (feedSelector.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Feed is not selected");
+            return;
         }
+        if (categorySelector.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Feed is not selected");
+            return;
+        }
+
+        RemoveFromCategoryDialog dialog = new RemoveFromCategoryDialog(this, rootPaneCheckingEnabled, cman, feedContainer);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
 
         this.listener.containerChanged(feedContainer);
     }

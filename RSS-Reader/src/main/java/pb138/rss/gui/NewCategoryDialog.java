@@ -34,6 +34,7 @@ public class NewCategoryDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form NewCategoryDialog
+     *
      * @param parent
      * @param modal
      * @param cman
@@ -151,19 +152,18 @@ public class NewCategoryDialog extends javax.swing.JDialog {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String input = nameTextField.getText().trim();
-        
-        if (input.equals("none") || input.length() <= 0) 
+
+        if (input.equals("none") || input.length() <= 0) {
             JOptionPane.showMessageDialog(rootPane, "Invalid name");
-            
-        else if (cman.findByName(input) != null) 
+        } else if (cman.findByName(input) != null) {
             JOptionPane.showMessageDialog(rootPane, "Category already exist");
-        
-        else { 
+        } else {
             cman.createCategory(new Category(input));
-            if (cman.findByName(input) != null)
+            if (cman.findByName(input) != null) {
                 JOptionPane.showMessageDialog(rootPane, "Category created");
-        }        
-        //doClose(RET_OK);
+            }
+        }
+        doClose(RET_OK);
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
