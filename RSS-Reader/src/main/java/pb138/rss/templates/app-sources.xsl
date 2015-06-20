@@ -21,7 +21,7 @@
             font-family: Arial
             }           
             img {
-            float: top;
+            float: left;
             }
             hr {
             clear: both;
@@ -45,10 +45,10 @@
             </strong>
             <br/>
            </h1>
-            
+           
             <span class='date'>
                 <strong>
-                <xsl:value-of select="./date"/>
+                <xsl:value-of select="./pubDate"/>
                 <separator> </separator>                   
                     <font color="737373">
                         <xsl:value-of select="../title"/> 

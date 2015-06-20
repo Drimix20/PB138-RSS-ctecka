@@ -252,10 +252,7 @@ public class ReaderUI extends javax.swing.JFrame {
         jTextPane1.setEditable(false);
         jTextPane1.setEditorKit(jTextPane1.createEditorKitForContentType("text/html"));
         jTextPane1.setContentType("text/html");
-        String initialText = "<html>\n"
-                + "<h2>The feed contents will be displayed here.\n</h2>"
-                + "<p>This text is not editable by the user, but can be selected and copied.</p><br/>"
-                + "<strong><em>HTML</em></strong> can be displayed.";
+        String initialText = "načítavam...";
 
         jTextPane1.setText(initialText);
         jScrollPane2.setViewportView(jTextPane1);
@@ -370,6 +367,8 @@ public class ReaderUI extends javax.swing.JFrame {
 
         downloader.schedule(tasks);
         updateFeedList();
+        
+        listener.containerChanged(feedContainer);
     }
 
     private void removeFeedButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,6 +386,8 @@ public class ReaderUI extends javax.swing.JFrame {
 
         downloader.schedule(tasks);
         updateFeedList();
+        
+        listener.containerChanged(feedContainer);
     }
 
     private void waitForStatus(int status) {

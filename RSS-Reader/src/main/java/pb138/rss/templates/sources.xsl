@@ -144,7 +144,7 @@
                     <a href="{./link}"><xsl:value-of select="./title"/></a>
                 </h3>
                 <span class="date">
-                    <xsl:value-of select="./date"/>
+                    <xsl:value-of select="./pubDate"/>
                 </span>
                 <p>
                     <xsl:value-of select="./description" disable-output-escaping="yes" />

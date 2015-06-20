@@ -88,7 +88,7 @@ public class RssFileWriter implements Runnable {
                 itemElement.appendChild(this.createCdataElement("title", item.getTitle(), doc));
                 itemElement.appendChild(this.createCdataElement("description", item.getDescription(), doc));
                 itemElement.appendChild(this.createCdataElement("link", item.getLink(), doc));
-                itemElement.appendChild(this.createCdataElement("date", item.getDate(), doc));
+                itemElement.appendChild(this.createCdataElement("pubDate", item.getDate(), doc));
                 itemElement.appendChild(this.createCdataElement("author", item.getAuthor(), doc));
                 itemElement.appendChild(this.createCdataElement("guid", item.getGuid(), doc));
                 source.appendChild(itemElement);
