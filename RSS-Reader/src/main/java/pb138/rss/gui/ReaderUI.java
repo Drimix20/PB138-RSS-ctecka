@@ -448,9 +448,12 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setVisible(true);
         RssFeedContainer filtered = dialog.getFilteredContainer();
 
-        if (filtered.getKeys().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Nothing found");
+        int sz = 0;
+        for (String key : filtered.getKeys()) {
+            RssFeed feed = filtered.getFromFeedContainer(key);
+            sz += feed.getItems().size();
         }
+        JOptionPane.showMessageDialog(rootPane, sz + " result(s) found"); 
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
