@@ -11,11 +11,20 @@ import pb138.rss.feed.RssFeedContainer;
  * @author Michaela
  */
 public class CategoryManagerImpl implements CategoryManager {
-    //este doplnim
+    
     private Set<Category> categories = new HashSet<>();
     
-    public CategoryManagerImpl(Set<Category> categories) {
-        this.categories = categories;
+    public CategoryManagerImpl() {
+    }
+    
+    @Override
+    public void init(Category none) {
+        this.categories.add(none);
+    }
+    
+    @Override
+    public void addCategories(Set<Category> categories) {
+        this.categories.addAll(categories);
     }
     
     @Override
