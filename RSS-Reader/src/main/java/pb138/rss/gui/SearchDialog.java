@@ -42,7 +42,7 @@ public class SearchDialog extends javax.swing.JDialog {
     private DefaultListModel<SearchQuery> listModel;
     DefaultComboBoxModel<SearchField> comboModelField;
     DefaultComboBoxModel<SearchCondition> comboModelCond;
-    RssFeedContainer filtered;
+    RssFeedContainer filtered = new RssFeedContainer();
     
     /**
      * A return status code - returned if Cancel button has been pressed
