@@ -108,7 +108,7 @@ public class ReaderUI extends javax.swing.JFrame {
     
     private void loadCategories() {
         try {
-            File input = new File("src/main/resources/categories.xml");
+            File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
             CategoriesLoader cLoader = new CategoriesLoader(input);
             categories = cLoader.loadCategories();
         } catch (Exception e) {
