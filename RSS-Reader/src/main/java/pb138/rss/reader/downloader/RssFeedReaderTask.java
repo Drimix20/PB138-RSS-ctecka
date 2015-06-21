@@ -80,4 +80,8 @@ public class RssFeedReaderTask implements Runnable {
         }
     }
 
+    @Override
+    public String toString() {
+        return label;
+    }
 }

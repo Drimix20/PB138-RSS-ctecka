@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.xml.transform.TransformerException;
 import pb138.rss.converter.ContainerToHtmlConverter;
@@ -40,9 +41,9 @@ public class SearchDialog extends javax.swing.JDialog {
     private SearchManagerImpl sman;
     private RssFeedContainer container;
     private DefaultListModel<SearchQuery> listModel;
-    DefaultComboBoxModel<SearchField> comboModelField;
-    DefaultComboBoxModel<SearchCondition> comboModelCond;
-    RssFeedContainer filtered;
+    private DefaultComboBoxModel<SearchField> comboModelField;
+    private DefaultComboBoxModel<SearchCondition> comboModelCond;
+    private RssFeedContainer tmp = new RssFeedContainer();
     
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -106,7 +107,7 @@ public class SearchDialog extends javax.swing.JDialog {
     }
     
     public RssFeedContainer getFilteredContainer() {
-        return filtered;
+        return container;
     }
     
     /**
@@ -140,6 +141,7 @@ public class SearchDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         feedsCheckBox = new javax.swing.JCheckBox();
         itemsCheckBox = new javax.swing.JCheckBox();
+        returnButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -168,6 +170,7 @@ public class SearchDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Field");
 
+        allQueriesCheckBox.setSelected(true);
         allQueriesCheckBox.setText("All queries?");
 
         jScrollPane1.setViewportView(jList1);
@@ -192,41 +195,53 @@ public class SearchDialog extends javax.swing.JDialog {
         itemsCheckBox.setSelected(true);
         itemsCheckBox.setText("Items?");
 
+        returnButton.setText("Return last search");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(searchFieldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(searchConditionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(searchStringField, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(addQueryButton)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(feedsCheckBox)
+                            .addComponent(itemsCheckBox)
+                            .addComponent(allQueriesCheckBox))
+                        .addGap(0, 6, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(searchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(searchFieldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(returnButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(searchConditionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchStringField, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addQueryButton)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(feedsCheckBox)
-                    .addComponent(itemsCheckBox)
-                    .addComponent(allQueriesCheckBox))
-                .addGap(0, 6, Short.MAX_VALUE))
+                        .addComponent(cancelButton)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,17 +268,14 @@ public class SearchDialog extends javax.swing.JDialog {
                         .addComponent(itemsCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(allQueriesCheckBox)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchButton)
-                            .addComponent(cancelButton))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(deleteButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchButton)
+                        .addComponent(cancelButton)
+                        .addComponent(returnButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -280,24 +292,40 @@ public class SearchDialog extends javax.swing.JDialog {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         Set<SearchQuery> queries = qman.getAllQueries();
-  
-        if (queries.isEmpty()) 
-            filtered = container;
-        else {
-            filtered = sman.runSearchForContainer(container, queries, 
-                    allQueriesCheckBox.isSelected(), feedsCheckBox.isSelected(), itemsCheckBox.isSelected());
+        
+        if (queries.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "No queries");
+            return;
         }
+        tmp = container;  
+        container = sman.runSearchForContainer(container, queries, 
+                allQueriesCheckBox.isSelected(), feedsCheckBox.isSelected(), itemsCheckBox.isSelected());
             
         String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
         String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
-        ContainerToHtmlConverter converter = createConverter(filtered, filePath,xslPath);
+        ContainerToHtmlConverter converter = createConverter(container, filePath,xslPath);
+        try {
+            this.jTextPane1.setText(converter.getString());
+            this.listener.setChangeJTextPane(false);
+        } catch (TransformerException ex) {
+            java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }  
+    
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (tmp != null)
+            container = tmp;
+        
+        String filePath = "src/main/java/pb138/rss/file/temporary-feeds.xml";
+        String xslPath = "src/main/java/pb138/rss/templates/app-sources.xsl";
+        ContainerToHtmlConverter converter = createConverter(container, filePath,xslPath);
         try {
             this.jTextPane1.setText(converter.getString());
             this.listener.setChangeJTextPane(false);
         } catch (TransformerException ex) {
             java.util.logging.Logger.getLogger(ReaderUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }                                            
+    }
     
     private javax.swing.JTextPane jTextPane1;
     public void setTextPane(javax.swing.JTextPane textPane) {
@@ -393,11 +421,12 @@ public class SearchDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton returnButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JComboBox searchConditionComboBox;
     private javax.swing.JComboBox searchFieldComboBox;
     private javax.swing.JTextField searchStringField;
-    // End of variables declaration                   
+    // End of variables declaration                     
 
     private int returnStatus = RET_CANCEL;
 }

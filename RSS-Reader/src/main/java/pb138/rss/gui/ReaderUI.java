@@ -85,14 +85,11 @@ public class ReaderUI extends javax.swing.JFrame {
         loadRssFeedTaskConfiguration(feedContainer);
         downloader.schedule(tasks);
 
-        try {
-            File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
-            CategoriesLoader cLoader = new CategoriesLoader(input);
-            categories = cLoader.loadCategories();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        cman = new CategoryManagerImpl(categories);
+        cman = new CategoryManagerImpl();
+        cman.init(new Category("none"));
+        loadCategories();
+        cman.addCategories(categories);
+        
         categorySelectorModel = fillCategorySelectorModel();
         categorySelector.setModel(categorySelectorModel);
         feedSelectorModel = fillFeedSelectorModel();
@@ -106,6 +103,16 @@ public class ReaderUI extends javax.swing.JFrame {
             tasks = loader.loadConfiguration();
         } catch (Exception ex) {
             logger.error(ex.getMessage());
+        }
+    }
+    
+    private void loadCategories() {
+        try {
+            File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
+            CategoriesLoader cLoader = new CategoriesLoader(input);
+            categories = cLoader.loadCategories();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
     }
 
@@ -441,19 +448,29 @@ public class ReaderUI extends javax.swing.JFrame {
         dialog.setVisible(true);
         RssFeedContainer filtered = dialog.getFilteredContainer();
 
-        if (filtered.getKeys().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Nothing found");
+        int sz = 0;
+        for (String key : filtered.getKeys()) {
+            RssFeed feed = filtered.getFromFeedContainer(key);
+            sz += feed.getItems().size();
         }
+        JOptionPane.showMessageDialog(rootPane, sz + " result(s) found"); 
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (feedSelector.getSelectedItem() != null && categorySelector.getSelectedItem() != null) {
-            RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
-            Category cat = (Category) categorySelector.getSelectedItem();
-            feed.setCategory(cat);
-            if (feed.getCategory().equals(cat)) {
-                JOptionPane.showMessageDialog(rootPane, "Feed successfully added to category");
-            }
+        if (feedSelector.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Feed is not selected");
+            return;
+        }
+        if (categorySelector.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Category is not selected");
+            return;
+        }
+        
+        RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
+        Category cat = (Category) categorySelector.getSelectedItem();
+        feed.setCategory(cat);
+        if (feed.getCategory().equals(cat)) {
+            JOptionPane.showMessageDialog(rootPane, "Feed successfully added to category");
         }
 
         this.listener.containerChanged(feedContainer);
@@ -465,7 +482,7 @@ public class ReaderUI extends javax.swing.JFrame {
             return;
         }
         if (categorySelector.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(rootPane, "Feed is not selected");
+            JOptionPane.showMessageDialog(rootPane, "Category is not selected");
             return;
         }
 
