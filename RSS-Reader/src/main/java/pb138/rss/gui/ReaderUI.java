@@ -49,7 +49,7 @@ public class ReaderUI extends javax.swing.JFrame {
     private CategoryManagerImpl cman;
     private Set<Category> categories;
     private DefaultComboBoxModel<Category> categorySelectorModel;
-    private DefaultComboBoxModel<RssFeed> feedSelectorModel;
+    private DefaultComboBoxModel<RssFeedReaderTask> feedSelectorModel;
     private RssFeedContainerChangeListener listener;
 
     /**
@@ -126,10 +126,10 @@ public class ReaderUI extends javax.swing.JFrame {
         return cbModel;
     }
 
-    private DefaultComboBoxModel<RssFeed> fillFeedSelectorModel() {
-        DefaultComboBoxModel<RssFeed> cbModel = new DefaultComboBoxModel<>();
-        for (String key : feedContainer.getKeys()) {
-            cbModel.addElement(feedContainer.getFromFeedContainer(key));
+    private DefaultComboBoxModel<RssFeedReaderTask> fillFeedSelectorModel() {
+        DefaultComboBoxModel<RssFeedReaderTask> cbModel = new DefaultComboBoxModel<>();
+        for (int i=0; i < tasks.size(); i++) {
+            cbModel.addElement(tasks.get(i));
         }
         return cbModel;
     }
@@ -465,13 +465,17 @@ public class ReaderUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Category is not selected");
             return;
         }
-        
-        RssFeed feed = (RssFeed) feedSelector.getSelectedItem();
+
+        RssFeedReaderTask task = (RssFeedReaderTask) feedSelector.getSelectedItem();
         Category cat = (Category) categorySelector.getSelectedItem();
+        String url = task.getAssociatedUrl();
+        RssFeed feed = feedContainer.getFromFeedContainer(url);
+
         feed.setCategory(cat);
-        if (feed.getCategory().equals(cat)) {
+        if (feed.getCategory().equals(cat))
             JOptionPane.showMessageDialog(rootPane, "Feed successfully added to category");
-        }
+        else
+            JOptionPane.showMessageDialog(rootPane, "Feed could not be added to category");
 
         this.listener.containerChanged(feedContainer);
     }
