@@ -55,7 +55,7 @@ public class RssFeedContainer implements Container {
     @Override
     public boolean removeOldData(RssFeedReaderTask task) {
         for (String key : feedContainer.keySet()) {
-            if (feedContainer.get(key).getLink().equalsIgnoreCase(task.getAssociatedUrl())) {
+            if (key.equalsIgnoreCase(task.getAssociatedUrl())) {
                 RssFeed removedFeed = feedContainer.remove(key);
                 return removedFeed != null;
             }
