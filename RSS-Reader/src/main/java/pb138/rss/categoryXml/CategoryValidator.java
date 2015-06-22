@@ -26,19 +26,21 @@ public class CategoryValidator {
     private static final Logger logger = Logger.getLogger(CategoryValidator.class);
     
     public static void main(String[] args){
+        File file = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
         CategoryValidator validator = new CategoryValidator();
-        validator.validate();
+        validator.validate(file);
     }
 
-    public void validate() {
-        try {  
-            Source xmlFile = new StreamSource(new File("src/main/java/pb138/rss/categoryXml/categories.xml"));
+    public void validate(File file) {
+        try {
+            Source xmlFile = new StreamSource(file);
             Source xsdFile = new StreamSource(new File("src/main/java/pb138/rss/categoryXml/CategorySchema.xsd"));
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 
             Schema schema = schemaFactory.newSchema(xsdFile);
             Validator validator = schema.newValidator();
             validator.validate(xmlFile);
+            logger.info("Categories file validated!");
         } catch (SAXException | IOException e) {    
             logger.error("The categories file is invalid: " + e.getMessage());     
         }
