@@ -2,6 +2,7 @@ package pb138.rss.gui;
 
 import pb138.rss.converter.ContainerToHtmlConverter;
 import pb138.rss.categoryXml.CategoriesLoader;
+import pb138.rss.categoryXml.CategoryValidator;
 import java.io.File;
 import java.net.URLDecoder;
 import java.security.CodeSource;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import pb138.rss.configuration.ConfigurationLoader;
 import pb138.rss.configuration.ConfigurationSaver;
+import pb138.rss.configuration.ConfigurationValidator;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.reader.downloader.RssFeedDownloader;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
@@ -76,6 +78,8 @@ public class ReaderUI extends javax.swing.JFrame {
 
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
+            ConfigurationValidator validator = new ConfigurationValidator();
+            validator.validate(inputFile);
             ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
             tasks = loader.loadConfiguration();
         } catch (Exception ex) {
@@ -109,6 +113,8 @@ public class ReaderUI extends javax.swing.JFrame {
     private void loadCategories() {
         try {
             File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
+            CategoryValidator validator = new CategoryValidator();
+            validator.validate(input);
             CategoriesLoader cLoader = new CategoriesLoader(input);
             categories = cLoader.loadCategories();
         } catch (Exception e) {
