@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.apache.log4j.Logger;
 import pb138.rss.listener.ContainerChangeListener;
+import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
  *
@@ -49,5 +50,17 @@ public class RssFeedContainer implements Container {
     @Override
     public RssFeed getFromFeedContainer(String key) {
         return feedContainer.getOrDefault(key, new RssFeed());
+    }
+
+    @Override
+    public boolean removeOldData(RssFeedReaderTask task) {
+        for (String key : feedContainer.keySet()) {
+            if (feedContainer.get(key).getLink().equalsIgnoreCase(task.getAssociatedUrl())) {
+                RssFeed removedFeed = feedContainer.remove(key);
+                return removedFeed != null;
+            }
+        }
+
+        return false;
     }
 }

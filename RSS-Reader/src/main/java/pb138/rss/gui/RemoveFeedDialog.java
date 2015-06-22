@@ -12,6 +12,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import pb138.rss.feed.Container;
 import pb138.rss.gui.renderer.CheckboxListCellRenderer;
 import pb138.rss.gui.renderer.CheckboxSelectionModel;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
@@ -24,6 +25,7 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
 
     private DefaultListModel<String> listModel;
     private List<RssFeedReaderTask> feedReaderTask;
+    private Container container;
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -56,6 +58,10 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
     }
 
     public void setFeedReaderTask(List<RssFeedReaderTask> feedReaderTask) {
@@ -169,6 +175,7 @@ public class RemoveFeedDialog extends javax.swing.JDialog {
             }
             for (RssFeedReaderTask task : tasksToDelete) {
                 feedReaderTask.remove(task);
+                container.removeOldData(task);
             }
 
             JOptionPane.showMessageDialog(rootPane, "Selected feeds deleted");

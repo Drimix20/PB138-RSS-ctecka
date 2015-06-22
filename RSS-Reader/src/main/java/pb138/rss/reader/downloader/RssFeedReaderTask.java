@@ -31,6 +31,14 @@ public class RssFeedReaderTask implements Runnable {
         this.feedContainer = feedContainer;
     }
 
+    public Container getFeedContainer() {
+        return feedContainer;
+    }
+
+    public RssFeedReader getFeedReader() {
+        return feedReader;
+    }
+
     public String getAssociatedUrl() {
         return feedReader.getUrl();
     }
@@ -76,7 +84,8 @@ public class RssFeedReaderTask implements Runnable {
             feedContainer.putIntoFeedContainer(feedReader.getUrl(), feed);
             logger.info(label + "- messages.size: " + feed.getItems().size());
         } catch (Exception ex) {
-            logger.error("Error while task", ex);
+            logger.error("Error occurd while reading rss feed <" + feedReader.getUrl() + "> from stream");
+            return;
         }
     }
 

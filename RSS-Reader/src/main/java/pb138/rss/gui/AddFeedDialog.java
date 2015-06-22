@@ -8,6 +8,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import org.apache.log4j.Logger;
 import pb138.rss.feed.Container;
 import pb138.rss.reader.downloader.RssFeedReader;
 import pb138.rss.reader.downloader.RssFeedReaderTask;
@@ -19,6 +20,7 @@ import pb138.rss.reader.downloader.RssFeedReaderTask;
  */
 public class AddFeedDialog extends javax.swing.JDialog {
 
+    private static Logger log = Logger.getLogger(AddFeedDialog.class);
     private List<RssFeedReaderTask> feedReaderTask;
     private Container container;
 
@@ -177,10 +179,13 @@ public class AddFeedDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        RssFeedReader feedReader = new RssFeedReader(urlField.getText().trim());
-        int scheduledTime = ((TimeInterval) scheduledTimeDelayCombo.getSelectedItem()).getTime();
-        feedReaderTask.add(new RssFeedReaderTask(nameField.getText().trim(), feedReader, 0, scheduledTime, container));
-
+        try {
+            RssFeedReader feedReader = new RssFeedReader(urlField.getText().trim());
+            int scheduledTime = ((TimeInterval) scheduledTimeDelayCombo.getSelectedItem()).getTime();
+            feedReaderTask.add(new RssFeedReaderTask(nameField.getText().trim(), feedReader, 0, scheduledTime, container));
+        } catch (Exception ex) {
+            log.error("Error while adding new rss feed <" + urlField.getText().trim() + ">");
+        }
         doClose(RET_OK);
     }//GEN-LAST:event_addButtonActionPerformed
 

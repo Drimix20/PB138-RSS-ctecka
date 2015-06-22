@@ -89,7 +89,7 @@ public class ReaderUI extends javax.swing.JFrame {
         cman.init(new Category("none"));
         loadCategories();
         cman.addCategories(categories);
-        
+
         categorySelectorModel = fillCategorySelectorModel();
         categorySelector.setModel(categorySelectorModel);
         feedSelectorModel = fillFeedSelectorModel();
@@ -105,7 +105,7 @@ public class ReaderUI extends javax.swing.JFrame {
             logger.error(ex.getMessage());
         }
     }
-    
+
     private void loadCategories() {
         try {
             File input = new File("src/main/java/pb138/rss/categoryXml/categories.xml");
@@ -128,7 +128,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
     private DefaultComboBoxModel<RssFeedReaderTask> fillFeedSelectorModel() {
         DefaultComboBoxModel<RssFeedReaderTask> cbModel = new DefaultComboBoxModel<>();
-        for (int i=0; i < tasks.size(); i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             cbModel.addElement(tasks.get(i));
         }
         return cbModel;
@@ -374,7 +374,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
         downloader.schedule(tasks);
         updateFeedList();
-        
+
         listener.containerChanged(feedContainer);
     }
 
@@ -386,6 +386,7 @@ public class ReaderUI extends javax.swing.JFrame {
         RemoveFeedDialog dialog = new RemoveFeedDialog(this, rootPaneCheckingEnabled,
                 "Select configuration for remove:", "Remove", "Cancel", labels);
         dialog.setFeedReaderTask(tasks);
+        dialog.setContainer(feedContainer);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
 
@@ -393,7 +394,7 @@ public class ReaderUI extends javax.swing.JFrame {
 
         downloader.schedule(tasks);
         updateFeedList();
-        
+
         listener.containerChanged(feedContainer);
     }
 
@@ -453,7 +454,7 @@ public class ReaderUI extends javax.swing.JFrame {
             RssFeed feed = filtered.getFromFeedContainer(key);
             sz += feed.getItems().size();
         }
-        JOptionPane.showMessageDialog(rootPane, sz + " result(s) found"); 
+        JOptionPane.showMessageDialog(rootPane, sz + " result(s) found");
     }
 
     private void addToCatButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -472,10 +473,11 @@ public class ReaderUI extends javax.swing.JFrame {
         RssFeed feed = feedContainer.getFromFeedContainer(url);
 
         feed.setCategory(cat);
-        if (feed.getCategory().equals(cat))
+        if (feed.getCategory().equals(cat)) {
             JOptionPane.showMessageDialog(rootPane, "Feed successfully added to category");
-        else
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Feed could not be added to category");
+        }
 
         this.listener.containerChanged(feedContainer);
     }

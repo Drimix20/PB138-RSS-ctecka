@@ -41,8 +41,19 @@ public class RssFeedDownloader {
                     feedReaderTask.getScheduledDelay(), TimeUnit.SECONDS);
             scheduledTasks.put(feedReaderTask.getAssociatedUrl(), scheduledFuture);
         }
-        oldReaderTasks = tasksToSchedule;
+        oldReaderTasks = createNewInstanceOf(tasksToSchedule);
         logger.info("Tasks were scheduled");
+    }
+
+    private List<RssFeedReaderTask> createNewInstanceOf(List<RssFeedReaderTask> tasks) {
+        List<RssFeedReaderTask> oldTasks = new ArrayList<>();
+        for (RssFeedReaderTask currrentTask : oldTasks) {
+            RssFeedReaderTask rssFeedReaderTask = new RssFeedReaderTask(currrentTask.getLabel(), currrentTask.getFeedReader(), currrentTask.getInitialDelay(),
+                    currrentTask.getScheduledDelay(), currrentTask.getFeedContainer());
+            oldTasks.add(rssFeedReaderTask);
+        }
+
+        return oldTasks;
     }
 
     private void cancelUnsupportedTasks(List<RssFeedReaderTask> tasksToSchedule) {

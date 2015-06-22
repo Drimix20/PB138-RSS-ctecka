@@ -39,7 +39,7 @@ public class RssFeedReader {
         try {
             this.url = new URL(address);
         } catch (Exception ex) {
-            logger.error("URL error", ex);
+            throw new IllegalArgumentException("URL format error");
         }
     }
 
@@ -153,7 +153,7 @@ public class RssFeedReader {
             }
         } catch (XMLStreamException e) {
             logger.error("Error while parsing url=" + url, e);
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Error occurd while opening rss feed stream");
         }
         return feed;
     }
@@ -203,7 +203,7 @@ public class RssFeedReader {
         try {
             return url.openStream();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Error occurd while opening rss feed stream");
         }
     }
 }

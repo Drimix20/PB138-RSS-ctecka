@@ -1,6 +1,7 @@
 package pb138.rss.feed;
 
 import java.util.Set;
+import pb138.rss.reader.downloader.RssFeedReaderTask;
 
 /**
  *
@@ -15,4 +16,5 @@ public interface Container {
 
     void putIntoFeedContainer(String key, RssFeed feed);
 
+    boolean removeOldData(RssFeedReaderTask task);
 }
