@@ -17,6 +17,10 @@ public class CategoryManagerImpl implements CategoryManager {
     public CategoryManagerImpl() {
     }
     
+    /** 
+     * Prednastavená kategória none.
+     * @param none žiadna kategória
+     */
     @Override
     public void init(Category none) {
         this.categories.add(none);
@@ -32,6 +36,11 @@ public class CategoryManagerImpl implements CategoryManager {
         categories.add(category);
     }
 
+    /** 
+     * Vymaže danú kategóriu. Feedom s danou kategóriou nastaví novú kategóriu none.
+     * @param category
+     * @param container
+     */
     @Override
     public void deleteCategory(RssFeedContainer container, Category category) {
         for (String key : container.getKeys()) {
@@ -57,6 +66,12 @@ public class CategoryManagerImpl implements CategoryManager {
         return null;
     }
 
+    /** 
+     * Zobrazí feedy zo zoznamu kategorií.
+     * @param categories
+     * @param container
+     * @return filtrovaný kontejner
+     */
     @Override
     public RssFeedContainer showFeedsInCategories(RssFeedContainer container, List<Category> categories) {
         RssFeedContainer filtered = new RssFeedContainer();
