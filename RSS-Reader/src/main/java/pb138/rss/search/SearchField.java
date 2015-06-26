@@ -11,5 +11,6 @@ public enum SearchField {
     LANGUAGE,
     DATE,
     AUTHOR,
+    /*hociktoré z polí*/
     ANY
 }
