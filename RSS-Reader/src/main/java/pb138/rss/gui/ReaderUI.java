@@ -76,16 +76,6 @@ public class ReaderUI extends javax.swing.JFrame {
         downloader = new RssFeedDownloader(feedContainer, 3);
         categories = new HashSet<>();
 
-        try {
-            File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
-            ConfigurationValidator validator = new ConfigurationValidator();
-            validator.validate(inputFile);
-            ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
-            tasks = loader.loadConfiguration();
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
-
         loadRssFeedTaskConfiguration(feedContainer);
         downloader.schedule(tasks);
 
@@ -100,10 +90,12 @@ public class ReaderUI extends javax.swing.JFrame {
         feedSelector.setModel(feedSelectorModel);
     }
 
-    private void loadRssFeedTaskConfiguration(Container container) {
+    private void loadRssFeedTaskConfiguration(RssFeedContainer feedContainer) {
         try {
             File inputFile = new File(getJarContainingFolder(ReaderUI.class) + File.separator + "configuration.xml");
-            ConfigurationLoader loader = new ConfigurationLoader(inputFile, container);
+            ConfigurationValidator validator = new ConfigurationValidator();
+            validator.validate(inputFile);
+            ConfigurationLoader loader = new ConfigurationLoader(inputFile, feedContainer);
             tasks = loader.loadConfiguration();
         } catch (Exception ex) {
             logger.error(ex.getMessage());
