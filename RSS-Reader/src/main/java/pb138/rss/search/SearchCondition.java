@@ -6,15 +6,16 @@ package pb138.rss.search;
  */
 public enum SearchCondition {
     
-    /*presna zhoda*/
+    /*presná zhoda*/
     IS,
     IS_NOT,
-    /*podretazec*/
+    /*podreťazec*/
     CONTAINS,
     CONTAINS_NOT,
+    /*viac podreťazcov*/
     CONTAINS_ANY,
-    /*zaciatok retazca*/
+    /*začiatok reťazca*/
     BEGINS_WITH,
-    /*koniec retazca*/
-    ENDS_WITH,
+    /*koniec reťazca*/
+    ENDS_WITH
 }
