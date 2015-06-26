@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Set;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Michaela
  */
 public class CategoryManagerImpl implements CategoryManager {
-    
+    private final Logger logger = Logger.getLogger(CategoryManagerImpl.class);
     private Set<Category> categories = new HashSet<>();
     
     public CategoryManagerImpl() {
@@ -23,6 +24,7 @@ public class CategoryManagerImpl implements CategoryManager {
      */
     @Override
     public void init(Category none) {
+        logger.info("Initialize categories.");
         this.categories.add(none);
     }
     
@@ -33,6 +35,7 @@ public class CategoryManagerImpl implements CategoryManager {
     
     @Override
     public void createCategory(Category category) {
+        logger.info("Create category: " + category.toString());
         categories.add(category);
     }
 
@@ -43,6 +46,7 @@ public class CategoryManagerImpl implements CategoryManager {
      */
     @Override
     public void deleteCategory(RssFeedContainer container, Category category) {
+        logger.info("Delete category: " + category.toString());
         for (String key : container.getKeys()) {
             RssFeed result = container.getFromFeedContainer(key);
             if(result.getCategory().equals(category)) {
@@ -74,6 +78,7 @@ public class CategoryManagerImpl implements CategoryManager {
      */
     @Override
     public RssFeedContainer showFeedsInCategories(RssFeedContainer container, List<Category> categories) {
+        logger.info("Searching for feeds in given categories.");
         RssFeedContainer filtered = new RssFeedContainer();
         for (String key : container.getKeys()) {
             RssFeed result = container.getFromFeedContainer(key);
