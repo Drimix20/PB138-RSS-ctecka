@@ -50,9 +50,9 @@ public class SearchQuery {
     }
     
     /**
-     * 
+     * Zkontroluje, či feed vyhovuje dotazu.
      * @param feed
-     * @return 
+     * @return true, ak vyhovuje, inak false
      */
     public boolean matchFeed(RssFeed feed) {
         
@@ -188,6 +188,11 @@ public class SearchQuery {
         return titleRes || descrRes || langRes || dateRes;
     }
     
+    /** 
+     * Zkontroluje, či item vyhovuje dotazu.
+     * @param item
+     * @return true, ak vyhovuje, inak false
+     */
     public boolean matchItem(RssFeedItem item) {
         
         boolean any = false;
