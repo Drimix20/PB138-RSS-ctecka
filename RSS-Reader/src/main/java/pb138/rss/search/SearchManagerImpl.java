@@ -12,16 +12,14 @@ import pb138.rss.feed.RssFeedItem;
  */
 public class SearchManagerImpl implements SearchManager {
     
-    SearchQueryManagerImpl man;
-    
     /**
-     * 
+     * Spustí vyhľadávanie pre celý kontejner.
      * @param container
      * @param queries
-     * @param all if true then all queries else any query from set queries
-     * @param feeds
-     * @param items
-     * @return filtered container
+     * @param all logický súčin medzi dotazmi
+     * @param feeds bude sa vyhľadávať vo feedoch
+     * @param items bude sa vyhľadávať v itemoch
+     * @return filtrovaný kontejner
      */
     @Override
     public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all, boolean feeds, boolean items) {
@@ -66,6 +64,13 @@ public class SearchManagerImpl implements SearchManager {
         return filtered;
     }
  
+    /** 
+     * Spustí vyhľadávanie pre jeden feed.
+     * @param feed
+     * @param queries
+     * @param all logický súčin medzi dotazmi
+     * @return množina itemov feedu, ktoré vyhovujú dotazu
+     */
     @Override
     public Set<RssFeedItem> runSearchForFeed(RssFeed feed, Set<SearchQuery> queries, boolean all) {
     
