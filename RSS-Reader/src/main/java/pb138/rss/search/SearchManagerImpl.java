@@ -5,12 +5,14 @@ import java.util.Set;
 import pb138.rss.feed.RssFeed;
 import pb138.rss.feed.RssFeedContainer;
 import pb138.rss.feed.RssFeedItem;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Michaela
  */
 public class SearchManagerImpl implements SearchManager {
+    private final Logger logger = Logger.getLogger(SearchManagerImpl.class);
     
     /**
      * Spustí vyhľadávanie pre celý kontejner.
@@ -23,6 +25,7 @@ public class SearchManagerImpl implements SearchManager {
      */
     @Override
     public RssFeedContainer runSearchForContainer(RssFeedContainer container, Set<SearchQuery> queries, boolean all, boolean feeds, boolean items) {
+        logger.info("Running search.");
         
         RssFeedContainer filtered = new RssFeedContainer();
         RssFeed filteredItems = new RssFeed();
