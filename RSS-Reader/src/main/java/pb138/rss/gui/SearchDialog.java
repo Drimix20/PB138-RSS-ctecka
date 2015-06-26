@@ -281,6 +281,10 @@ public class SearchDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>                        
 
+    /** 
+     * Vytvorenie nového dotazu.
+     * @param evt 
+     */
     private void addQueryButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         SearchQuery query = new SearchQuery((SearchField)searchFieldComboBox.getSelectedItem(), 
                 (SearchCondition)searchConditionComboBox.getSelectedItem(), searchStringField.getText());
@@ -290,6 +294,10 @@ public class SearchDialog extends javax.swing.JDialog {
         jList1.setModel(listModel);
     }                                              
 
+    /** 
+     * Spustenie vyhľadávania.
+     * @param evt 
+     */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         Set<SearchQuery> queries = qman.getAllQueries();
         
@@ -312,6 +320,10 @@ public class SearchDialog extends javax.swing.JDialog {
         }        
     }  
     
+    /** 
+     * Vrátenie posledného vyhľadávania.
+     * @param evt 
+     */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (tmp != null)
             container = tmp;
